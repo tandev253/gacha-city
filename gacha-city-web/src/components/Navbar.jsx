@@ -132,7 +132,13 @@ export default function Navbar({
       >
         {/* Các link bình thường (trừ Tài khoản, vì ta render riêng) */}
         {links?.map((l) => {
-          if (l.name === "Tài khoản") return null;
+          const nameNormalized = l.name
+            ?.trim()
+            .toLowerCase();
+
+          // bỏ qua menu tài khoản lấy từ Strapi
+          if (nameNormalized === "tài khoản")
+            return null;
 
           const isChildActive =
             l.children?.some(
