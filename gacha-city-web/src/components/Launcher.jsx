@@ -21,11 +21,13 @@ export default function Launcher() {
               <div className='launcher-step'>
                 <div>
                   <h3 className='launcher-step-title'>
-                    BƯỚC 1: MUA GTA V LEGACY
+                    BƯỚC 1: TẢI GTA V LEGACY
                   </h3>
                   <p className='launcher-step-desc'>
-                    Nếu bạn đã có sẵn GTA V trong
-                    máy thì chuyển sang bước 2.
+                    Chúng tôi có cung cấp bản tải GTA V Legacy miễn phí.
+                  </p>
+                  <p className='launcher-step-desc'>
+                    Hãy tải ngay để bắt đầu hành trình của bạn!
                   </p>
                 </div>
 
@@ -33,7 +35,7 @@ export default function Launcher() {
                   className='launcher-step-download'
                   href='#'
                 >
-                  ⬇
+                  
                 </a>
               </div>
 
@@ -44,9 +46,10 @@ export default function Launcher() {
                     BƯỚC 2: TẢI LAUNCHER
                   </h3>
                   <p className='launcher-step-desc'>
-                    Tải Launcher ngay để vào GACHA
-                    CITY, thế giới đang chờ bạn
-                    nhập cuộc!
+                    Thành Phố Gacha City sử dụng launcher riêng.
+                  </p>
+                  <p className='launcher-step-desc'>
+                    Hãy tải launcher để kết nối với thành phố Gacha City xinh đẹp!
                   </p>
                 </div>
 
@@ -54,7 +57,7 @@ export default function Launcher() {
                   className='launcher-step-download'
                   href='#'
                 >
-                  ⬇
+                  
                 </a>
               </div>
             </div>
