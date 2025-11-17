@@ -178,10 +178,12 @@ export default function Guide() {
                 <img
                   src='/epic.png'
                   className='icon'
+                  alt='Epic Games'
                 />
                 <img
                   src='/steam.png'
                   className='icon'
+                  alt='Steam'
                 />
               </div>
             </div>
