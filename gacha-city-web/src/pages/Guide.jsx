@@ -24,7 +24,7 @@ export default function Guide() {
     user: null,
   });
 
-  // ========= FALLBACK NAVBAR =========
+  // ========= FALLBACK NAVBAR (y chang Home) =========
   const fallbackNavbar = [
     {
       id: 0,
