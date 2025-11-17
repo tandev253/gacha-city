@@ -1,24 +1,22 @@
 .news-page {
   min-height: 100vh;
   margin-top: 50px;
-  background: radial-gradient(circle at top, #132c3a 0, #020614 55%, #000 100%);
+  background-image: url("/news-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   padding-top: 80px; /* chừa khoảng cho navbar */
   color: #fff;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     sans-serif;
-
 }
 
 .news-shell {
   max-width: 980px;
   margin: 0 auto 80px;
   padding: 32px 24px 40px;
-  border-radius: 20px;
-  background: radial-gradient(circle at 20% -20%, #16f2ff33 0, transparent 55%),
-    radial-gradient(circle at 80% 120%, #00ff9933 0, transparent 55%),
-    linear-gradient(180deg, #02040b 0, #020814 45%, #03020a 100%);
-  box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
-  border: 1px solid rgba(0, 240, 255, 0.4);
+  /* Bỏ tất cả background, border, box-shadow của news-shell */
 }
 
 /* Tabs */
@@ -38,11 +36,13 @@
   padding: 6px 8px;
   cursor: pointer;
   color: #a0b3c9;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
 }
 
 .news-tab.active {
   color: #00ff99;
-  font-weight: 600;
+  font-weight: bold; /* giữ nguyên bold cho active */
 }
 
 .news-tab-underline {
@@ -113,6 +113,7 @@
   overflow: hidden;
   border-radius: 12px;
   height: auto;
+  margin-top: 8px; /* thêm margin-top để đẩy hình ảnh xuống một chút */
 }
 
 .news-card-img img {
@@ -140,24 +141,26 @@
 }
 
 .news-card-title {
-  font-size: 18px;
+  font-size: 25px;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #ffffff;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: bold;
+  text-shadow: 0 0 7px #83d3a4;
 }
 
 .news-card-detail {
   font-size: 13px;
   color: #d0f7ff;
   background: transparent;
-  border-radius: 999px;
-  padding: 6px 12px; /* tăng padding */
-  border: 1px solid #00f0ff;
+  padding: 6px 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
   white-space: nowrap; /* không xuống dòng */
+  border: none;
 }
 
 .news-card-detail:hover {
@@ -219,6 +222,10 @@
 
 /* responsive */
 @media (max-width: 768px) {
+  .news-page {
+    background-attachment: scroll; /* thay đổi từ fixed sang scroll cho mobile */
+  }
+
   .news-shell {
     margin: 0 12px 40px;
     padding: 20px 14px 24px;
@@ -234,6 +241,7 @@
     width: 100%;
     max-width: none;
     flex: none;
+    margin-top: 0; /* reset margin-top cho mobile */
   }
 
   .news-card-header {
