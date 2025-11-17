@@ -10,3 +10,4 @@ gacha-city-api/.cache/
 # ==== ENV (bí mật) ====
 gacha-city-api/.env
 gacha-city-web/.env
+*.db
