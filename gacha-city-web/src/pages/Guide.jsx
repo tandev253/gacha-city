@@ -1,3 +1,4 @@
+
 // src/pages/Guide.jsx
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
@@ -24,6 +25,7 @@ export default function Guide() {
     user: null,
   });
 
+  // ========= FALLBACK NAVBAR =========
   // ========= FALLBACK NAVBAR (y chang Home) =========
   const fallbackNavbar = [
     {
