@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import AuthModal from "../components/AuthModal";
 import Footer from "../components/Footer";
-import "../css/guide.css";
+import "../css/Guide.css";
 import {
   getNavbar,
   getCurrentUser,
@@ -244,7 +244,7 @@ export default function Guide() {
             <h3>BƯỚC 3: RẤT QUAN TRỌNG!</h3>
             <p>
               Cập nhật tên Discord theo đúng định
-              dạng “ID | Tên” và tuân thủ luật để
+              dạng "ID | Tên" và tuân thủ luật để
               có trải nghiệm tốt nhất.
             </p>
           </div>
