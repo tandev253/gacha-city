@@ -340,3 +340,5 @@ export default function Navbar({
     </header>
   );
 }
+
+// End of src/components/Navbar.jsx ]
