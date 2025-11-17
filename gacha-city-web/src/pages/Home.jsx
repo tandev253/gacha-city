@@ -1,4 +1,4 @@
-// src/pages/Home.jsx
+// gacha-city-web/src/pages/Home.jsx
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
@@ -7,14 +7,13 @@ import NewsHighlight from "../components/NewsHighlight";
 import BusinessCarousel from "../components/BusinessCarousel";
 import AboutSection from "../components/AboutSection";
 import AuthModal from "../components/AuthModal";
-// import {
-//   getDashboard,
-//   getNavbar,
-//   getNews,
-//   getBusinesses,
-//   getAboutSection,
-//   getCurrentUser, // 👈 thêm
-// } from "../api/strapi";
+import {
+  getDashboard,
+  getNavbar,
+  getNews,
+  getBusinesses,
+  getAboutSection,
+} from "../api/strapi";
 
 export default function Home() {
   const [navLinks, setNavLinks] = useState([]);
@@ -34,13 +33,6 @@ export default function Home() {
   const [authOpen, setAuthOpen] = useState(false);
   const [authMode, setAuthMode] =
     useState("login"); // "login" | "register"
-
-  // ========= STATE AUTH TOÀN TRANG =========
-  const [auth, setAuth] = useState({
-    loading: true,
-    isLoggedIn: false,
-    user: null,
-  });
 
   const openLogin = () => {
     setAuthMode("login");
@@ -86,10 +78,10 @@ export default function Home() {
     },
   ];
 
-  // ====== LOAD DATA STRAPI (navbar, dashboard, ...) ======
   useEffect(() => {
     async function load() {
       try {
+        // gọi tất cả API một lượt
         const [
           navbar,
           dashboard,
@@ -120,6 +112,10 @@ export default function Home() {
         setNewsSlides(news || []);
         setBusinesses(biz || []);
         setAbout(aboutData || []);
+
+        console.log("News slides:", news);
+        console.log("Businesses:", biz);
+        console.log("About section:", aboutData);
       } catch (e) {
         console.error(e);
         setNavLinks(fallbackNavbar);
@@ -132,59 +128,6 @@ export default function Home() {
     load();
   }, []);
 
-  // ====== LẤY USER TỪ JWT MỖI LẦN LOAD TRANG ======
-  useEffect(() => {
-    async function loadAuth() {
-      try {
-        const user = await getCurrentUser();
-        setAuth({
-          loading: false,
-          isLoggedIn: !!user,
-          user: user || null,
-        });
-      } catch (err) {
-        console.error("loadAuth error:", err);
-        setAuth({
-          loading: false,
-          isLoggedIn: false,
-          user: null,
-        });
-      }
-    }
-    loadAuth();
-  }, []);
-
-  // ====== KHI LOGIN THÀNH CÔNG (AuthModal báo lên) ======
-  const handleLoginSuccess = (data) => {
-    // data = result.data từ authLogin (jwt + user)
-    const { jwt, user } = data;
-
-    localStorage.setItem("gc_jwt", jwt);
-    localStorage.setItem(
-      "gc_user",
-      JSON.stringify(user),
-    );
-
-    setAuth({
-      loading: false,
-      isLoggedIn: true,
-      user,
-    });
-
-    setAuthOpen(false); // đóng popup
-  };
-
-  // ====== LOGOUT ======
-  const handleLogout = () => {
-    localStorage.removeItem("gc_jwt");
-    localStorage.removeItem("gc_user");
-    setAuth({
-      loading: false,
-      isLoggedIn: false,
-      user: null,
-    });
-  };
-
   useEffect(() => {
     document.body.classList.add("bg-home");
     return () => {
@@ -196,10 +139,8 @@ export default function Home() {
     <>
       <Navbar
         links={navLinks}
-        auth={auth} // 👈 truyền auth xuống
         onLoginClick={openLogin}
         onRegisterClick={openRegister}
-        onLogout={handleLogout} // 👈 truyền logout xuống
       />
 
       <Hero
@@ -217,7 +158,6 @@ export default function Home() {
         mode={authMode}
         onClose={() => setAuthOpen(false)}
         onSwitchMode={setAuthMode}
-        onLoginSuccess={handleLoginSuccess} // 👈 callback
       />
     </>
   );

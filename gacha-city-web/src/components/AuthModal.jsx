@@ -15,7 +15,6 @@ export default function AuthModal({
   mode = "login", // "login" hoặc "register"
   onClose,
   onSwitchMode,
-  onLoginSuccess,
 }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -127,16 +126,19 @@ export default function AuthModal({
           return;
         }
 
-        // LƯU JWT + USER ĐÃ ĐẨY LÊN HOME
-        setSuccessMsg("Đăng nhập thành công!");
+        localStorage.setItem(
+          "gc_jwt",
+          result.data.jwt,
+        );
+        localStorage.setItem(
+          "gc_user",
+          JSON.stringify(result.data.user),
+        );
 
-        // Gọi callback báo cho Home biết
-        // Home sẽ setAuth + đóng popup, KHÔNG cần reload
-        if (
-          typeof onLoginSuccess === "function"
-        ) {
-          onLoginSuccess(result.data);
-        }
+        setSuccessMsg("Đăng nhập thành công!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       } catch (err) {
         console.error(err);
         setError(

@@ -1,4 +1,3 @@
-// gacha-city-web/src/components/AboutSection.jsx
 import "../css/AboutSection.css";
 
 const IMG_BASE =
@@ -20,7 +19,7 @@ export default function AboutSection({ data }) {
       : `${IMG_BASE}${rawUrl}`
     : "/fallback.png";
 
-  const fbUrl = data.socialFacebook ;
+  const fbUrl = data.socialFacebook;
   const discordUrl = data.socialDiscord;
 
   return (
@@ -36,6 +35,7 @@ export default function AboutSection({ data }) {
           <img
             src={img}
             className='video-thumb'
+            alt="Video thumbnail"
           />
           <span className='video-play'>▶</span>
         </div>
@@ -44,13 +44,13 @@ export default function AboutSection({ data }) {
           <h4>THEO DÕI CHÚNG TÔI</h4>
 
           <div className='social-row'>
-            <a href={fbUrl} className='icon'>
-              <img src='/icon-fb.png' />
+            <a href={fbUrl} className='icon' target="_blank" rel="noopener noreferrer">
+              <img src='/icon-fb.png' alt="Facebook" />
               <span>GACHA CITY</span>
             </a>
 
-            <a href={discordUrl} className='icon'>
-              <img src='/icon-discord.png' />
+            <a href={discordUrl} className='icon' target="_blank" rel="noopener noreferrer">
+              <img src='/icon-discord.png' alt="Discord" />
               <span>GACHA CITY</span>
             </a>
           </div>

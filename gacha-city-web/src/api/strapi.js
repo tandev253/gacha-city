@@ -1,5 +1,3 @@
-//gacha-city-web\src\api\strapi.js
-
 const API_URL =
   import.meta.env.VITE_STRAPI_URL ||
   "http://localhost:1337";
@@ -285,7 +283,7 @@ export async function getAboutSection() {
 
 /* ================= AUTH VỚI STRAPI ================= */
 
-// Đăng nhập chỉ cần username + password
+// LOGIN CHỈ DÙNG USERNAME + PASSWORD
 export async function authLogin(username, password) {
   try {
     const res = await fetch(`${API_URL}/api/auth/local`, {
@@ -294,20 +292,19 @@ export async function authLogin(username, password) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        identifier: username, // dùng username để login
+        identifier: username,
         password,
       }),
     });
 
-    const data = await parseJsonSafe(res);
+    const data = await res.json();
 
     if (!res.ok) {
-      return {
-        ok: false,
-        error:
-          data?.error?.message ||
-          "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.",
-      };
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        "Đăng nhập thất bại.";
+      return { ok: false, error: msg };
     }
 
     return { ok: true, data };
@@ -315,23 +312,10 @@ export async function authLogin(username, password) {
     console.error("authLogin error:", err);
     return {
       ok: false,
-      error: "Không kết nối được tới server.",
+      error: "Không kết nối được server.",
     };
   }
 }
-
-// PARSE JSON AN TOÀN
-
-async function parseJsonSafe(res) {
-  const text = await res.text();
-  try {
-    return text ? JSON.parse(text) : {};
-  } catch (err) {
-    console.error("JSON parse error:", text);
-    return null;
-  }
-}
-// GỬI OTP ĐĂNG KÝ
 
 export async function sendRegisterOtp(
   username,
@@ -353,24 +337,20 @@ export async function sendRegisterOtp(
         }),
       },
     );
-
-    const data = await parseJsonSafe(res);
-
+    const data = await res.json();
     if (!res.ok) {
-      return {
-        ok: false,
-        error:
-          data?.error ||
-          "Gửi OTP thất bại (server trả về lỗi).",
-      };
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        "Gửi OTP thất bại.";
+      return { ok: false, error: msg };
     }
-
     return { ok: true, data };
   } catch (err) {
     console.error("sendRegisterOtp error:", err);
     return {
       ok: false,
-      error: "Không kết nối được tới server.",
+      error: "Không kết nối được server.",
     };
   }
 }
@@ -390,23 +370,20 @@ export async function registerWithOtp(
         body: JSON.stringify({ email, otp }),
       },
     );
-
-    const data = await parseJsonSafe(res);
-
+    const data = await res.json();
     if (!res.ok) {
-      return {
-        ok: false,
-        error:
-          data?.error || "Xác thực OTP thất bại.",
-      };
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        "Đăng ký thất bại.";
+      return { ok: false, error: msg };
     }
-
     return { ok: true, data };
   } catch (err) {
     console.error("registerWithOtp error:", err);
     return {
       ok: false,
-      error: "Không kết nối được tới server.",
+      error: "Không kết nối được server.",
     };
   }
 }

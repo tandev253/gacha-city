@@ -1,17 +1,11 @@
-// src/components/Navbar.jsx
 import { useEffect, useState } from "react";
-import {
-  Link,
-  useLocation,
-} from "react-router-dom";
 import "../css/Navbar.css";
+import { getCurrentUser } from "../api/strapi";
 
 export default function Navbar({
   links,
-  auth, // { loading, isLoggedIn, user }
   onLoginClick,
   onRegisterClick,
-  onLogout,
 }) {
   const [open, setOpen] = useState(false);
   const [openDropdown, setOpenDropdown] =
@@ -19,9 +13,35 @@ export default function Navbar({
   const [accountOpen, setAccountOpen] =
     useState(false);
 
-  // lấy path hiện tại từ react-router
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const [auth, setAuth] = useState({
+    loading: true,
+    isLoggedIn: false,
+    user: null,
+  });
+
+  const currentPath = window.location.pathname;
+
+  // ===== LẤY TRẠNG THÁI LOGIN TỪ STRAPI (JWT trong localStorage) =====
+  useEffect(() => {
+    const fetchAuth = async () => {
+      try {
+        const user = await getCurrentUser();
+        setAuth({
+          loading: false,
+          isLoggedIn: !!user,
+          user: user || null,
+        });
+      } catch (err) {
+        console.error("Auth check error:", err);
+        setAuth((prev) => ({
+          ...prev,
+          loading: false,
+        }));
+      }
+    };
+
+    fetchAuth();
+  }, []);
 
   // đóng menu khi resize lên desktop
   useEffect(() => {
@@ -55,10 +75,14 @@ export default function Navbar({
     );
   };
 
-  const isLoggedIn = auth?.isLoggedIn;
-  const user = auth?.user;
+  const toggleAccount = () => {
+    setAccountOpen((cur) => !cur);
+  };
 
-  // popup auth
+  const isLoggedIn = auth.isLoggedIn;
+  const user = auth.user;
+
+  // ===== Hàm gọi popup auth từ dropdown =====
   const handleLoginPopup = () => {
     handleLinkClick();
     onLoginClick?.();
@@ -69,54 +93,22 @@ export default function Navbar({
     onRegisterClick?.();
   };
 
-  // toggle tài khoản
-  const toggleAccount = () => {
-    if (!isLoggedIn) {
-      handleLoginPopup();
-      return;
-    }
-    setAccountOpen((cur) => !cur);
-  };
-
-  const avatarUrl =
-    user?.avatar ||
-    user?.avatarUrl ||
-    "/default-avatar.png";
-
-  const displayName =
-    user?.characterName ||
-    user?.username ||
-    "Noname";
-
-  // những path coi là "khu tài khoản" -> highlight
-  const accountPaths = [
-    "/tai-khoan",
-    "/profile",
-    "/support",
-    "/change-password",
-  ];
-  const isAccountActive = accountPaths.some((p) =>
-    currentPath.startsWith(p),
-  );
-
   return (
     <header className='navbar'>
       <div className='navbar-left'>
         <div className='logo-glow'>
-          <Link to='/' onClick={handleLinkClick}>
-            <img
-              src='/gacha-logo.png'
-              className='navbar-logo'
-              alt='Gacha City'
-            />
-          </Link>
+          <img
+            src='/gacha-logo.png'
+            className='navbar-logo'
+            alt='Gacha City'
+          />
         </div>
         <span className='navbar-brand'>
           GACHA CITY
         </span>
       </div>
 
-      {/* Nút hamburger mobile */}
+       {/* Nút hamburger mobile */}
       <button
         className={`nav-toggle ${
           open ? "nav-toggle-open" : ""
@@ -126,7 +118,7 @@ export default function Navbar({
         <span />
         <span />
         <span />
-      </button>
+      </button> 
 
       <nav
         className={`navbar-right ${
@@ -135,7 +127,11 @@ export default function Navbar({
       >
         {/* Các link bình thường (trừ Tài khoản, vì ta render riêng) */}
         {links?.map((l) => {
-          if (l.name === "Tài khoản") return null;
+          // Filter tất cả các tên có chứa "tài khoản" hoặc "account" (không phân biệt hoa thường)
+          const linkName = l.name?.toLowerCase().trim() || '';
+          if (linkName.includes('tài khoản') || linkName.includes('account') || linkName === 'tai khoan') {
+            return null;
+          }
 
           const isChildActive =
             l.children?.some(
@@ -150,66 +146,61 @@ export default function Navbar({
           const isActive =
             isSelfActive || isChildActive;
 
-          // có submenu
-          if (l.children && l.children.length) {
-            return (
-              <div
-                key={l.id}
-                className={`nav-item dropdown ${
-                  openDropdown === l.id
-                    ? "dropdown-open"
-                    : ""
-                }`}
-              >
-                <button
-                  type='button'
-                  className={`dropdown-toggle ${
-                    isActive ? "active" : ""
-                  }`}
-                  onClick={() =>
-                    toggleDropdown(l.id)
-                  }
-                >
-                  {l.name}
-                  <span className='caret' />
-                </button>
-
-                <div className='dropdown-menu'>
-                  {l.children.map((c) => {
-                    const isChildActive =
-                      currentPath === c.url;
-                    return (
-                      <Link
-                        key={c.id}
-                        to={c.url}
-                        className={
-                          isChildActive
-                            ? "active"
-                            : ""
-                        }
-                        onClick={handleLinkClick}
-                      >
-                        {c.name}
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          }
-
-          // link thường
-          return (
-            <Link
+          return l.children &&
+            l.children.length ? (
+            <div
               key={l.id}
-              to={l.url}
+              className={`nav-item dropdown ${
+                openDropdown === l.id
+                  ? "dropdown-open"
+                  : ""
+              }`}
+            >
+              <button
+                type='button'
+                className={`dropdown-toggle ${
+                  isActive ? "active" : ""
+                }`}
+                onClick={() =>
+                  toggleDropdown(l.id)
+                }
+              >
+                {l.name}
+                <span className='caret' />
+              </button>
+
+              <div className='dropdown-menu'>
+                {l.children.map((c) => {
+                  const isChildActive =
+                    currentPath === c.url;
+                  return (
+                    <a
+                      key={c.id}
+                      href={c.url}
+                      className={
+                        isChildActive
+                          ? "active"
+                          : ""
+                      }
+                      onClick={handleLinkClick}
+                    >
+                      {c.name}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            <a
+              key={l.id}
+              href={l.url}
               onClick={handleLinkClick}
               className={`nav-link ${
                 isActive ? "active" : ""
               }`}
             >
               {l.name}
-            </Link>
+            </a>
           );
         })}
 
@@ -221,16 +212,17 @@ export default function Navbar({
         >
           <button
             type='button'
-            className={`account-toggle ${
-              isAccountActive ? "active" : ""
-            }`}
+            className='account-toggle'
             onClick={toggleAccount}
           >
             {isLoggedIn ? (
               <>
                 <div className='account-avatar-small'>
                   <img
-                    src={avatarUrl}
+                    src={
+                      user?.avatar ||
+                      "/default-avatar.png"
+                    }
                     alt='avatar'
                   />
                 </div>
@@ -249,13 +241,15 @@ export default function Navbar({
             )}
           </button>
 
-          {/* ĐÃ LOGIN MỚI HIỆN DROPDOWN */}
-          {isLoggedIn && (
-            <div className='account-dropdown'>
+          <div className='account-dropdown'>
+            {isLoggedIn ? (
               <div className='account-header'>
                 <div className='account-avatar'>
                   <img
-                    src={avatarUrl}
+                    src={
+                      user?.avatar ||
+                      "/default-avatar.png"
+                    }
                     alt='avatar'
                   />
                 </div>
@@ -264,74 +258,61 @@ export default function Navbar({
                     Tên nhân vật
                   </div>
                   <div className='account-name'>
-                    {displayName}
+                    {user?.characterName ||
+                      user?.username ||
+                      "Noname"}
                   </div>
                 </div>
               </div>
+            ) : null}
 
-              <Link
-                to='/profile'
-                className='account-item'
-                onClick={handleLinkClick}
-              >
-                Trang cá nhân
-              </Link>
+            {!isLoggedIn && (
+              <>
+                <button
+                  type='button'
+                  className='account-item primary'
+                  onClick={handleLoginPopup}
+                >
+                  Đăng nhập
+                </button>
+                <button
+                  type='button'
+                  className='account-item'
+                  onClick={handleRegisterPopup}
+                >
+                  Đăng ký
+                </button>
+              </>
+            )}
 
-              <Link
-                to='/support'
-                className='account-item'
-                onClick={handleLinkClick}
-              >
-                Trợ giúp và hỗ trợ
-              </Link>
+            <a
+              href='/support'
+              className='account-item'
+              onClick={handleLinkClick}
+            >
+              Trợ giúp và hỗ trợ
+            </a>
 
-              <Link
-                to='/change-password'
-                className='account-item'
-                onClick={handleLinkClick}
-              >
-                Thay đổi mật khẩu
-              </Link>
+            {isLoggedIn && (
+              <>
+                <a
+                  href='/change-password'
+                  className='account-item'
+                  onClick={handleLinkClick}
+                >
+                  Thay đổi mật khẩu
+                </a>
 
-              <button
-                type='button'
-                className='account-item'
-                onClick={() => {
-                  handleLinkClick();
-                  onLogout?.();
-                }}
-              >
-                Đăng xuất
-              </button>
-            </div>
-          )}
-
-          {/* CHƯA LOGIN: menu nhỏ
-          {!isLoggedIn && accountOpen && (
-            <div className='account-dropdown'>
-              <button
-                type='button'
-                className='account-item primary'
-                onClick={handleLoginPopup}
-              >
-                Đăng nhập
-              </button>
-              <button
-                type='button'
-                className='account-item'
-                onClick={handleRegisterPopup}
-              >
-                Đăng ký
-              </button>
-              <Link
-                to='/support'
-                className='account-item'
-                onClick={handleLinkClick}
-              >
-                Trợ giúp và hỗ trợ
-              </Link>
-            </div>
-          )} */}
+                <a
+                  href='/logout'
+                  className='account-item'
+                  onClick={handleLinkClick}
+                >
+                  Đăng xuất
+                </a>
+              </>
+            )}
+          </div>
         </div>
       </nav>
     </header>

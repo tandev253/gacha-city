@@ -654,24 +654,3 @@ header.navbar .account-toggle {
     border-radius: 8px;
   }
 }
-
-
-/* ======= HIGHLIGHT ACTIVE ======= */
-.nav-link.active,
-.dropdown-toggle.active {
-  color: #00ffb3 !important;
-  position: relative;
-}
-
-/* gạch chân phát sáng */
-.nav-link.active::after,
-.dropdown-toggle.active::after {
-  content: "";
-  position: absolute;
-  bottom: -6px;      
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #00ffb3;
-  box-shadow: 0 0 8px #00ffb3;
-}
