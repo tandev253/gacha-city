@@ -1,3 +1,4 @@
+
 import type { Schema, Struct } from '@strapi/strapi';
 
 export interface AdminApiToken extends Struct.CollectionTypeSchema {
@@ -562,6 +563,37 @@ export interface ApiDashboardDashboard extends Struct.SingleTypeSchema {
     onlinePlayers: Schema.Attribute.Integer;
     publishedAt: Schema.Attribute.DateTime;
     totalPlayers: Schema.Attribute.Integer;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiEventItemEventItem extends Struct.CollectionTypeSchema {
+  collectionName: 'event_items';
+  info: {
+    displayName: 'Event item';
+    pluralName: 'event-items';
+    singularName: 'event-item';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    desc: Schema.Attribute.Text;
+    img: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::event-item.event-item'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1172,6 +1204,7 @@ declare module '@strapi/strapi' {
       'api::about-section.about-section': ApiAboutSectionAboutSection;
       'api::business.business': ApiBusinessBusiness;
       'api::dashboard.dashboard': ApiDashboardDashboard;
+      'api::event-item.event-item': ApiEventItemEventItem;
       'api::hero.hero': ApiHeroHero;
       'api::navbar-item.navbar-item': ApiNavbarItemNavbarItem;
       'api::news-item.news-item': ApiNewsItemNewsItem;
