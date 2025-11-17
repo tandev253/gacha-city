@@ -53,7 +53,7 @@
 .step-box {
   position: relative;
   padding: 22px;
-  /* background: rgba(0, 0, 0, 0.35); */
+  /* background: rgba(0, 0, 0, 0.35); thêm lại background */
   border-radius: 0; /* tắt border-radius */
 }
 
@@ -68,7 +68,6 @@
   border-left: 2px solid #00e6e6;
   border-top: 2px solid #00e6e6;
   transform: rotate(0deg);
-  /* box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.4); */
   z-index: 1;
 }
 
@@ -81,8 +80,7 @@
   height: 62px;
   border-right: 2px solid #00e6e6;
   border-bottom: 2px solid #00e6e6;
-  transform: rotate(0deg); /* sửa từ 180° thành -90° */
-  /* box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.4); */
+  transform: rotate(0deg);
   z-index: 1;
 }
 
@@ -95,6 +93,11 @@
   font-family: "Montserrat", sans-serif; /* Montserrat SemiBold */
   font-weight: 600; /* SemiBold */
   text-shadow: 0 0 7px rgba(131, 211, 164, 1); /* Drop Shadow: X0 Y0 Blur 7, Color #83D3A4 */
+}
+
+.step-box p {
+  position: relative;
+  z-index: 2;
 }
 
 .neon-border {
@@ -111,8 +114,17 @@
   margin-top: 15px;
 }
 
-.icon {
-  width: 40px;
+/* Override CSS icon từ file khác - chỉ áp dụng cho guide page */
+.guide-page .icon {
+  height: 60px !important; /* cố định chiều cao */
+  width: auto !important; /* tự động điều chỉnh chiều rộng theo tỷ lệ */
+  display: block !important;
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  align-items: initial !important;
+  gap: initial !important;
 }
 
 /* BOTTOM GRID */
@@ -129,12 +141,10 @@
 
 .note-box::before {
   border-color: #00ffa1 !important;
-  /* box-shadow: 0px 0px 12px rgba(0, 255, 170, 0.4) !important; */
 }
 
 .note-box::after {
   border-color: #00ffa1 !important;
-  /* box-shadow: 0px 0px 12px rgba(0, 255, 170, 0.4) !important; */
 }
 
 @media (max-width: 900px) {
