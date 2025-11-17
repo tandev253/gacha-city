@@ -153,7 +153,7 @@ export default function Navbar({
           const isActive =
             isSelfActive || isChildActive;
 
-          // có submenu
+          // có submenu  
           if (l.children && l.children.length) {
             return (
               <div
