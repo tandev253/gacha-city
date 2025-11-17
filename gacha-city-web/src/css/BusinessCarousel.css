@@ -1,0 +1,259 @@
+.biz-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 80px 60px 100px;
+  background: url("/news-bg.png") center center / cover no-repeat;
+  color: #fff;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.biz-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #000000 0%, #133621 64%, #001107 97%);
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* Header */
+.biz-header {
+  position: absolute;
+  left: 160px;
+  top: 50px;
+  z-index: 10;
+  text-align: left;
+}
+
+.biz-header h2 {
+  color: #24D56D;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  filter: drop-shadow(0 0 11.5px #24D56D);
+}
+
+.biz-header p {
+  margin-top: 6px;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.biz-empty {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.biz-slider {
+  position: relative;
+  z-index: 2;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* Khung hiển thị 1 slide ở giữa, giống FiveM */
+.biz-viewport {
+  width: 80vw;
+  max-width: 1000px;
+  height: 450px;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Track trượt ngang */
+.biz-track {
+  display: flex;
+  transition: transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: transform;
+  height: 100%;
+  align-items: center;
+}
+
+/* Mỗi slide chiếm 100% viewport */
+.biz-slide {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* Card cơ bản */
+.biz-card {
+  width: 300px;
+  height: 380px;
+  border-radius: 26px;
+  background: radial-gradient(
+    circle at top,
+    rgba(0, 255, 191, 0.12),
+    #050505 55%,
+    #000 100%
+  );
+  border: 1px solid rgba(0, 255, 191, 0.25);
+  box-shadow: 0 0 18px rgba(0, 255, 191, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0.6;
+  transform: scale(0.94);
+  transition: all 0.25s ease;
+}
+
+/* Card đang active ở giữa: to hơn, sáng hơn giống FiveM */
+.biz-card.active {
+  opacity: 1;
+  transform: scale(1.08) translateY(0);
+  box-shadow: 0 0 32px rgba(0, 255, 191, 0.9);
+  border-color: #00ffbf;
+  width: 340px;
+  height: 420px;
+}
+
+/* Arrow buttons */
+.biz-arrow {
+  background: none;
+  border: 3px solid #08f7e8;
+  font-size: 36px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: #08f7e8;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.biz-arrow:hover {
+  background: #08f7e8;
+  color: #000;
+}
+
+/* Logo wrapper */
+.biz-logo-wrap {
+  width: 220px;
+  height: 260px;
+  border-radius: 22px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.biz-card.active .biz-logo-wrap {
+  width: 250px;
+  height: 290px;
+}
+
+.biz-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.biz-name {
+  margin-top: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 14px;
+  text-align: center;
+}
+
+.biz-card.active .biz-name {
+  font-size: 16px;
+}
+
+.biz-btn {
+  margin-top: 15px;
+  padding: 10px 28px;
+  border-radius: 999px;
+  border: none;
+  background: #00ffbf;
+  color: #013526;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.7px;
+  box-shadow: 0 0 16px rgba(0, 255, 191, 0.8);
+  text-transform: uppercase;
+}
+
+.biz-card.active .biz-btn {
+  font-size: 14px;
+  padding: 12px 32px;
+}
+
+/* Dots */
+.biz-dots {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  margin-top: 35px;
+}
+
+.biz-dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 8px;
+  background: #666;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.biz-dot.active {
+  background: #00ffbf;
+}
+
+@media (max-width: 768px) {
+  .biz-viewport {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+  }
+
+  .biz-card {
+    width: 250px;
+    height: 320px;
+  }
+
+  .biz-card.active {
+    width: 280px;
+    height: 360px;
+  }
+
+  .biz-arrow {
+    width: 50px;
+    height: 50px;
+    font-size: 28px;
+  }
+}
