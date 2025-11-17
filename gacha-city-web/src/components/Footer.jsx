@@ -44,7 +44,7 @@ export default function Footer() {
                 rel='noreferrer'
               >
                 <span className='footer-social-icon'>
-                  f
+                  <img src='/icon-fb.png' alt='Facebook' />
                 </span>
                 <span className='footer-social-label'>
                   GACHA CITY
@@ -58,7 +58,7 @@ export default function Footer() {
                 rel='noreferrer'
               >
                 <span className='footer-social-icon'>
-                  🎮
+                  <img src='/icon-discord.png' alt='Discord' />
                 </span>
                 <span className='footer-social-label'>
                   GACHA CITY

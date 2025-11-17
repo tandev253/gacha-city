@@ -101,6 +101,13 @@
   text-transform: lowercase;
 }
 
+/* Icon images cho Facebook và Discord */
+.footer-social-icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
 .footer-social-label {
   font-size: 13px;
 }

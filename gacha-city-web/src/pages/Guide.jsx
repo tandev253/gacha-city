@@ -191,7 +191,7 @@ export default function Guide() {
             <div className='step-box neon-border'>
               <h3>BƯỚC 2: TẢI LAUNCHER</h3>
               <p>
-                Mở GTA V và nhập IP server được
+                Tải launcher của server được
                 cung cấp để kết nối. Hãy tuân thủ
                 luật của thành phố để trải nghiệm
                 tốt nhất.
