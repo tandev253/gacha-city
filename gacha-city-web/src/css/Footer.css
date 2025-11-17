@@ -1,0 +1,123 @@
+.footer {
+  position: relative;
+  margin-top: 80px;
+  color: #fff;
+  font-family: "Poppins", system-ui, sans-serif;
+  overflow: hidden;
+}
+
+/* nền gradient + vệt sọc dọc */
+.footer-overlay {
+  padding: 40px 8%;
+  background:
+    linear-gradient(to bottom, #02040a 0%, #02130f 30%, #00c86a 100%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(0, 255, 170, 0.08) 0px,
+      rgba(0, 255, 170, 0.08) 4px,
+      transparent 4px,
+      transparent 16px
+    );
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+/* LEFT */
+.footer-left {
+  max-width: 520px;
+}
+
+.footer-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-logo {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.footer-title {
+  font-size: 32px;
+  letter-spacing: 2px;
+  font-weight: 800;
+  text-transform: uppercase;
+  text-shadow: 0 0 18px rgba(255, 255, 255, 0.8);
+}
+
+.footer-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* RIGHT */
+.footer-right {
+  text-align: left;
+  min-width: 220px;
+}
+
+.footer-follow {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.footer-socials {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #fff;
+  padding: 6px 0;
+}
+
+.footer-social-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  text-transform: lowercase;
+}
+
+.footer-social-label {
+  font-size: 13px;
+}
+
+/* Hover nhẹ */
+.footer-social:hover .footer-social-label {
+  color: #00ffb3;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    align-self: stretch;
+  }
+}

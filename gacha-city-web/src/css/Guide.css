@@ -1,0 +1,98 @@
+.guide-page {
+  padding: 60px 8%;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Title */
+.guide-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #00ffcc;
+  margin-top: 40px;
+}
+
+.guide-sub {
+  opacity: 0.7;
+  margin-bottom: 30px;
+}
+
+/* TOP CONTENT */
+.guide-top {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 80px;
+}
+
+.guide-main-img {
+  width: 45%;
+  border-radius: 10px;
+}
+
+/* RIGHT BOXES */
+.steps-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.step-box {
+  padding: 22px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+}
+
+.step-box h3 {
+  margin-bottom: 10px;
+  color: #00ffcc;
+  font-size: 20px;
+}
+
+.neon-border {
+  border: 2px solid #00e6e6;
+  box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.4);
+}
+
+/* ICONS */
+.icon-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.icon {
+  width: 40px;
+}
+
+/* BOTTOM GRID */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.note-box {
+  grid-column: span 2;
+  border-color: #00ffa1 !important;
+  box-shadow: 0px 0px 12px rgba(0, 255, 170, 0.4) !important;
+}
+
+@media (max-width: 900px) {
+  .guide-top {
+    flex-direction: column;
+  }
+
+  .guide-main-img {
+    width: 100%;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .note-box {
+    grid-column: span 1;
+  }
+}

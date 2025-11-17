@@ -1,0 +1,456 @@
+.launcher-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 60px 0 80px;
+  background: url("/launcher-bg.png") center center / cover no-repeat;
+  color: #fff;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+    sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.launcher-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #000000 0%, #133621 64%, #001107 97%);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.launcher-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1600px;
+  width: 100%;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.launcher-title {
+  font-size: 32px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #24D56D;
+  text-align: center;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 700;
+  filter: drop-shadow(0 0 11.5px rgba(36, 213, 109, 1));
+}
+
+.launcher-sub {
+  margin-top: 8px;
+  font-size: 18px;
+  color: #FFFFFF;
+  text-align: center;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 600;
+}
+
+.launcher-text-block {
+  max-width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Card chính - TỐ HƠN với background trong suốt 50% */
+.launcher-card {
+  position: relative;
+  margin-top: 26px;
+  padding: 40px 45px;
+  border-radius: 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(5, 15, 30, 0.5),
+    rgba(8, 35, 50, 0.5)
+  );
+  border: 1px solid rgba(0, 255, 200, 0.6);
+  box-shadow: 0 0 40px rgba(0, 255, 200, 0.35);
+  display: flex;
+  overflow: visible;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* tạo viền neon nổi */
+.launcher-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  border: 1px solid rgba(0, 255, 200, 0.5);
+  box-shadow: 0 0 25px rgba(0, 255, 200, 0.6);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* phần text (bên trái) - ALIGN LEFT */
+.launcher-card-inner {
+  position: relative;
+  z-index: 1;
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* từng bước - THẲNG HÀNG TITLE VÀ ALIGN LEFT */
+.launcher-step {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Container cho title và description */
+.launcher-step > div:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  flex: 1;
+}
+
+.launcher-step-title {
+  font-size: 30px;
+  font-weight: 700;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #24D56D;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+  text-align: left;
+  filter: drop-shadow(0 0 13.3px rgba(255, 255, 255, 0.7));
+}
+
+.launcher-step-desc {
+  margin-top: 0;
+  font-size: 16px;
+  color: #d9e6f2;
+  text-align: left;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
+}
+
+/* DOWNLOAD ICON - CHỈ ICON VỚI HIGHLIGHT */
+.launcher-step-download {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: transparent;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* SVG Download Icon với highlight trắng */
+.launcher-step-download::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2300ffe0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpolyline points='7,10 12,15 17,10'/%3E%3Cline x1='12' y1='15' x2='12' y2='3'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.4));
+  transition: all 0.3s ease;
+}
+
+/* Hover effect cho download icon - PHÓNG TO VÀ SÁNG HƠN */
+.launcher-step-download:hover::before {
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8)) brightness(1.3);
+  transform: scale(1.2);
+}
+
+/* Active/Click effect */
+.launcher-step-download:active::before {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6)) brightness(1.1);
+}
+
+/* nhân vật bên phải - KHÔNG CÓ HOVER SCALE */
+.launcher-character {
+  position: relative;
+  z-index: 200;
+  flex: 0 0 380px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: -55px;
+  margin-right: -38px;
+  margin-top: -70px;
+  margin-bottom: -37px;
+}
+
+.launcher-character img {
+  width: 100%;
+  max-width: 410px;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.3));
+  transition: none;
+}
+
+/* Tablet Responsive - 1024px */
+@media (max-width: 1024px) {
+  .launcher-container {
+    max-width: 1400px;
+    padding: 0 30px;
+  }
+
+  .launcher-title {
+    font-size: 28px;
+    filter: drop-shadow(0 0 9px rgba(36, 213, 109, 1));
+  }
+
+  .launcher-sub {
+    font-size: 16px;
+  }
+
+  .launcher-card {
+    padding: 30px 35px;
+    max-width: 1000px;
+  }
+
+  .launcher-character {
+    flex: 0 0 320px;
+    margin-right: -20px;
+    margin-top: -40px;
+    margin-bottom: 10px;
+  }
+
+  .launcher-character img {
+    max-width: 360px;
+  }
+
+  .launcher-step-title {
+    font-size: 18px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7));
+  }
+
+  .launcher-step-desc {
+    font-size: 15px;
+    font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+  }
+
+  .launcher-step-download {
+    width: 28px;
+    height: 28px;
+  }
+
+  .launcher-step-download::before {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Mobile Large - 900px */
+@media (max-width: 900px) {
+  .launcher-section {
+    height: auto;
+    min-height: 100vh;
+    aspect-ratio: unset;
+    padding: 100px 0 60px;
+  }
+
+  .launcher-container {
+    padding: 0 20px;
+  }
+
+  .launcher-title {
+    font-size: 24px;
+    filter: drop-shadow(0 0 8px rgba(36, 213, 109, 1));
+  }
+
+  .launcher-sub {
+    font-size: 15px;
+  }
+
+  .launcher-card {
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 30px 45px;
+    max-width: 100%;
+    overflow: visible;
+  }
+
+  .launcher-card-inner {
+    gap: 22px;
+  }
+
+  .launcher-character {
+    margin: 25px auto -20px;
+    flex-basis: auto;
+    margin-right: 0;
+    margin-left: 0;
+    flex: 0 0 280px;
+  }
+
+  .launcher-character img {
+    max-width: 320px;
+  }
+}
+
+/* Mobile Medium - 600px */
+@media (max-width: 600px) {
+  .launcher-section {
+    padding: 80px 0 40px;
+  }
+
+  .launcher-container {
+    padding: 0 16px;
+  }
+
+  .launcher-title {
+    font-size: 22px;
+    filter: drop-shadow(0 0 7px rgba(36, 213, 109, 1));
+  }
+
+  .launcher-sub {
+    font-size: 14px;
+  }
+
+  .launcher-card {
+    padding: 20px 25px 35px;
+  }
+
+  .launcher-card-inner {
+    gap: 18px;
+  }
+
+  .launcher-step {
+    gap: 14px;
+  }
+
+  .launcher-step-title {
+    font-size: 16px;
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+
+  .launcher-step-desc {
+    font-size: 14px;
+    margin-top: 4px;
+    font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+  }
+
+  .launcher-step-download {
+    width: 24px;
+    height: 24px;
+  }
+
+  .launcher-step-download::before {
+    width: 24px;
+    height: 24px;
+  }
+
+  .launcher-character {
+    flex: 0 0 220px;
+    margin: 18px auto -15px;
+  }
+
+  .launcher-character img {
+    max-width: 260px;
+  }
+}
+
+/* Mobile Small - 480px */
+@media (max-width: 480px) {
+  .launcher-section {
+    padding: 70px 0 30px;
+  }
+
+  .launcher-container {
+    padding: 0 12px;
+  }
+
+  .launcher-title {
+    font-size: 20px;
+    filter: drop-shadow(0 0 6px rgba(36, 213, 109, 1));
+  }
+
+  .launcher-card {
+    padding: 18px 20px 28px;
+  }
+
+  .launcher-step-title {
+    font-size: 15px;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.7));
+  }
+
+  .launcher-step-desc {
+    font-size: 13px;
+    font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+  }
+
+  .launcher-character {
+    flex: 0 0 200px;
+    margin: 12px auto -10px;
+  }
+
+  .launcher-character img {
+    max-width: 240px;
+  }
+
+  .launcher-step-download {
+    width: 22px;
+    height: 22px;
+  }
+
+  .launcher-step-download::before {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* Mobile Extra Small - 360px */
+@media (max-width: 360px) {
+  .launcher-title {
+    font-size: 18px;
+    filter: drop-shadow(0 0 5px rgba(36, 213, 109, 1));
+  }
+
+  .launcher-card {
+    padding: 15px 18px 22px;
+  }
+
+  .launcher-character {
+    flex: 0 0 180px;
+  }
+
+  .launcher-character img {
+    max-width: 220px;
+  }
+
+  .launcher-step-download {
+    width: 20px;
+    height: 20px;
+  }
+
+  .launcher-step-download::before {
+    width: 20px;
+    height: 20px;
+  }
+
+  .launcher-step-title {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.7));
+  }
+}

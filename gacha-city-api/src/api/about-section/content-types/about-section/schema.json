@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "about_sections",
+  "info": {
+    "singularName": "about-section",
+    "pluralName": "about-sections",
+    "displayName": "about-section"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "videoThumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "socialFacebook": {
+      "type": "string"
+    },
+    "socialDiscord": {
+      "type": "string"
+    },
+    "faqButtonLabel": {
+      "type": "string"
+    },
+    "guideButtonLabel": {
+      "type": "string"
+    }
+  }
+}

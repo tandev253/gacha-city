@@ -1,0 +1,12 @@
+# ==== NODE MODULES ====
+gacha-city-api/node_modules/
+gacha-city-web/node_modules/
+
+# ==== BUILD / DIST ====
+gacha-city-web/dist/
+gacha-city-api/build/
+gacha-city-api/.cache/
+
+# ==== ENV (bí mật) ====
+gacha-city-api/.env
+gacha-city-web/.env

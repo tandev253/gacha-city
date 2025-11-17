@@ -1,0 +1,175 @@
+.news-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  padding: 80px 60px 100px;
+  background: url("/news-bg.png") center center / cover no-repeat;
+  color: #fff;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.news-section::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #000000 0%, #133621 64%, #001107 97%);
+  opacity: 0.3;
+  z-index: 1;
+}
+
+/* Title ở góc trên trái */
+.news-subtitle {
+  position: absolute;
+  left: 160px;
+  top: 50px;
+  color: #24D56D;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  filter: drop-shadow(0 0 11.5px #24D56D);
+  z-index: 10;
+}
+
+.news-desc {
+  position: absolute;
+  left: 160px;
+  top: 86px;
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  z-index: 10;
+}
+
+/* Layout content chính */
+.news-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  max-width: 1600px;
+  position: relative;
+  z-index: 2;
+}
+
+/* LEFT SIDE */
+.news-left {
+  width: 50%;
+}
+
+.news-title {
+  font-size: 42px;
+  font-weight: 600;
+  line-height: 1.2;
+  filter: drop-shadow(0 0 7px #83D3A4);
+}
+
+.news-text {
+  margin-top: 20px;
+  opacity: 0.85;
+  line-height: 1.5;
+  font-size: 18px;
+}
+
+.news-btn {
+  margin-top: 35px;
+  padding: 14px 28px;
+  background: #00ffbf;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 10;
+}
+
+.news-btn:hover {
+  background: #00e6ac;
+}
+
+/* RIGHT SIDE */
+.news-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.arrow {
+  background: none;
+  border: 3px solid #08f7e8;
+  font-size: 36px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  color: #08f7e8;
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 10;
+}
+
+.arrow:hover {
+  background: #08f7e8;
+  color: #000;
+}
+
+.news-image-box {
+  width: 600px;
+  height: 380px;
+  border: 4px solid #08f7e8;
+  border-radius: 18px;
+  padding: 10px;
+  box-shadow: 0 0 30px #08f7e8;
+  position: relative;
+  z-index: 3;
+}
+
+.news-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
+/* DOTS */
+.dots {
+  text-align: center;
+  margin-top: 35px;
+  align-self: center;
+  position: relative;
+  z-index: 10;
+}
+
+.dot {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 8px;
+  background: #666;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.dot.active {
+  background: #00ffbf;
+}
