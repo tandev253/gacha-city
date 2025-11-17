@@ -1,25 +1,22 @@
-
 .news-page {
   min-height: 100vh;
   margin-top: 50px;
-  background: radial-gradient(circle at top, #132c3a 0, #020614 55%, #000 100%);
+  background-image: url("/news-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   padding-top: 80px; /* chừa khoảng cho navbar */
   color: #fff;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
     sans-serif;
-
 }
 
 .news-shell {
   max-width: 980px;
   margin: 0 auto 80px;
   padding: 32px 24px 40px;
-  border-radius: 20px;
-  background: radial-gradient(circle at 20% -20%, #16f2ff33 0, transparent 55%),
-    radial-gradient(circle at 80% 120%, #00ff9933 0, transparent 55%),
-    linear-gradient(180deg, #02040b 0, #020814 45%, #03020a 100%);
-  box-shadow: 0 0 40px rgba(0, 240, 255, 0.25);
-  border: 1px solid rgba(0, 240, 255, 0.4);
+  /* Bỏ tất cả background, border, box-shadow của news-shell */
 }
 
 /* Tabs */
@@ -39,11 +36,13 @@
   padding: 6px 8px;
   cursor: pointer;
   color: #a0b3c9;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
 }
 
 .news-tab.active {
   color: #00ff99;
-  font-weight: 600;
+  font-weight: bold; /* giữ nguyên bold cho active */
 }
 
 .news-tab-underline {
@@ -81,32 +80,40 @@
   position: relative;
   display: flex;
   align-items: stretch;
-  padding: 18px 22px;
-  gap: 20px;
-
-  background: radial-gradient(circle at top left, #16f2ff33 0, transparent 50%),
-    radial-gradient(circle at bottom right, #00ff9933 0, transparent 50%),
-    #020814;
-  border: 1px solid #00e0ff;
-  clip-path: polygon(0 0, 96% 0, 100% 16%, 100% 100%, 5% 100%, 0 84%);
-  box-shadow: 0 0 26px rgba(0, 240, 255, 0.2);
+  /* Điều chỉnh padding để nội dung nhích xuống vừa với news-box */
+  padding: 35px 40px 25px 40px;
+  gap: 30px;
+  min-height: 160px;
+  
+  /* Thay đổi background thành news-box.png */
+  background-image: url("/news-box.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  
+  /* Stroke border */
+  /* border: 1px solid #00B3B3; */
+  
+  /* Shadow effects */
+  /* box-shadow: 0 0 15.5px 0 rgba(149, 231, 183, 0.8); */
 }
 
-.news-card-inner::before {
+/* .news-card-inner::before {
   content: "";
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(0, 255, 153, 0.3);
-  clip-path: polygon(0 0, 96% 0, 100% 16%, 100% 100%, 5% 100%, 0 84%);
+  border: 1px solid rgba(0, 179, 179, 0.3);
   pointer-events: none;
-}
+} */
 
 /* ảnh bên trái */
 .news-card-img {
-  flex: 0 0 220px;
-  max-width: 220px;
+  flex: 0 0 200px; /* giảm từ 220px xuống 200px */
+  max-width: 200px;
   overflow: hidden;
   border-radius: 12px;
+  height: auto;
+  margin-top: 8px; /* thêm margin-top để đẩy hình ảnh xuống một chút */
 }
 
 .news-card-img img {
@@ -122,6 +129,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center; /* căn giữa nội dung theo chiều dọc */
 }
 
 .news-card-header {
@@ -129,27 +137,30 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 12px; /* tăng margin */
 }
 
 .news-card-title {
-  font-size: 18px;
+  font-size: 25px;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #ffffff;
+  font-family: "Noto Sans", sans-serif;
+  font-weight: bold;
+  text-shadow: 0 0 7px #83d3a4;
 }
 
 .news-card-detail {
   font-size: 13px;
   color: #d0f7ff;
   background: transparent;
-  border-radius: 999px;
-  padding: 4px 10px;
-  border: 1px solid #00f0ff;
+  padding: 6px 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
+  white-space: nowrap; /* không xuống dòng */
+  border: none;
 }
 
 .news-card-detail:hover {
@@ -158,8 +169,8 @@
 }
 
 .news-card-desc {
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: 14px; /* tăng từ 13px lên 14px */
+  line-height: 1.6; /* tăng line-height */
   color: #b2c7da;
 }
 
@@ -211,6 +222,10 @@
 
 /* responsive */
 @media (max-width: 768px) {
+  .news-page {
+    background-attachment: scroll; /* thay đổi từ fixed sang scroll cho mobile */
+  }
+
   .news-shell {
     margin: 0 12px 40px;
     padding: 20px 14px 24px;
@@ -218,12 +233,15 @@
 
   .news-card-inner {
     flex-direction: column;
-    clip-path: polygon(0 0, 100% 0, 100% 16%, 100% 100%, 0 100%, 0 84%);
+    padding: 24px 20px; /* điều chỉnh padding cho mobile */
+    min-height: auto;
   }
 
   .news-card-img {
     width: 100%;
     max-width: none;
+    flex: none;
+    margin-top: 0; /* reset margin-top cho mobile */
   }
 
   .news-card-header {
