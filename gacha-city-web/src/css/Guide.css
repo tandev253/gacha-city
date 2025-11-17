@@ -2,6 +2,12 @@
   padding: 60px 8%;
   color: white;
   font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  /* Background news-bg đằng sau tất cả thành phần */
+  background-image: url("/news-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* Title */
@@ -10,12 +16,13 @@
   font-weight: 700;
   font-family: "Montserrat", sans-serif; /* dùng Montserrat Bold */
   color: #24D56D; /* cập nhật màu theo yêu cầu */
-  margin-top: 40px;
-  text-shadow: 0 0 11.5px rgba(131, 211, 164, 1); /* Drop Shadow: X0 Y0 Blur 11.5, Color #83D3A4 */
+  margin-top: 80px; /* nhích xuống xa khỏi navbar */
+  /* text-shadow: 0 0 11.5px rgba(131, 211, 164, 1); - bỏ để chữ rõ 100% */
 }
 
 .guide-sub {
   margin-bottom: 30px;
+  margin-top: 20px; /* nhích xuống một tí */
   font-family: "Montserrat", sans-serif; /* Montserrat SemiBold */
   font-weight: 600;
   color: #FFFFFF; /* 100% */
