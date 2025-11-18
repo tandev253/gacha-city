@@ -628,6 +628,44 @@ export interface ApiHeroHero extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiLoginHistoryLoginHistory
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'login_histories';
+  info: {
+    displayName: 'login-history';
+    pluralName: 'login-histories';
+    singularName: 'login-history';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    city: Schema.Attribute.String;
+    country: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    dateDisplay: Schema.Attribute.String;
+    durationDisplay: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::login-history.login-history'
+    > &
+      Schema.Attribute.Private;
+    os: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    timeDisplay: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiNavbarItemNavbarItem extends Struct.CollectionTypeSchema {
   collectionName: 'navbar_items';
   info: {
@@ -1138,21 +1176,22 @@ export interface PluginUsersPermissionsUser
   info: {
     description: '';
     displayName: 'User';
-    name: 'user';
     pluralName: 'users';
     singularName: 'user';
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    avatar: Schema.Attribute.Media<'images'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
+    characterName: Schema.Attribute.String;
+    confirmationToken: Schema.Attribute.String;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    discordName: Schema.Attribute.String;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1164,14 +1203,17 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    login_histories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::login-history.login-history'
+    >;
     password: Schema.Attribute.Password &
-      Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
+    resetPasswordToken: Schema.Attribute.String;
     role: Schema.Attribute.Relation<
       'manyToOne',
       'plugin::users-permissions.role'
@@ -1181,7 +1223,6 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.Private;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
-      Schema.Attribute.Unique &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
@@ -1205,6 +1246,7 @@ declare module '@strapi/strapi' {
       'api::dashboard.dashboard': ApiDashboardDashboard;
       'api::event-item.event-item': ApiEventItemEventItem;
       'api::hero.hero': ApiHeroHero;
+      'api::login-history.login-history': ApiLoginHistoryLoginHistory;
       'api::navbar-item.navbar-item': ApiNavbarItemNavbarItem;
       'api::news-item.news-item': ApiNewsItemNewsItem;
       'plugin::content-releases.release': PluginContentReleasesRelease;

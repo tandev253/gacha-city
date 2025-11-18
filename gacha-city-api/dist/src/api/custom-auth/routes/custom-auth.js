@@ -1,4 +1,5 @@
 "use strict";
+// Strapi v5 - TypeScript ESM
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     routes: [
@@ -8,6 +9,8 @@ exports.default = {
             handler: "custom-auth.sendOtp",
             config: {
                 auth: false,
+                policies: [],
+                middlewares: [],
             },
         },
         {
@@ -16,6 +19,8 @@ exports.default = {
             handler: "custom-auth.registerWithOtp",
             config: {
                 auth: false,
+                policies: [],
+                middlewares: [],
             },
         },
     ],

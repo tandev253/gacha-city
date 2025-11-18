@@ -1,0 +1,481 @@
+/* ============ PAGE WRAPPER ============ */
+
+.profile-page {
+  min-height: 100vh;
+  padding-top: 80px; /* chừa chỗ cho navbar */
+  background: radial-gradient(circle at top, #04121a 0, #01040a 40%, #000 100%);
+  color: #fff;
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* trạng thái loading / error */
+.profile-loading,
+.profile-error {
+  max-width: 1100px;
+  margin: 120px auto;
+  text-align: center;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.profile-error {
+  color: #ff6b6b;
+}
+
+/* ============ HERO BANNER ============ */
+
+.profile-hero {
+  position: relative;
+  max-width: 100%;
+  height: 280px;
+  margin: 0 auto 32px;
+  background: url("/banner-city.png") center center / cover no-repeat;
+  overflow: hidden;
+}
+
+.profile-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.9)
+  );
+}
+
+.profile-hero-content {
+  position: absolute;
+  inset: 0;
+  padding: 48px 60px 32px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+/* ============ USER BLOCK ============ */
+
+.profile-user {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid #00ffc3;
+  box-shadow:
+    0 0 0 3px rgba(0, 255, 195, 0.35),
+    0 0 40px rgba(0, 255, 195, 0.8);
+  background: #000;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-label {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #b9c7d6;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #00ffb0;
+  text-shadow: 0 0 12px rgba(0, 255, 176, 0.9);
+}
+
+.profile-sub {
+  font-size: 13px;
+  color: #d0d7e0;
+}
+
+/* ============ HERO ACTIONS ============ */
+
+.profile-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-discord {
+  padding: 10px 24px;
+  border-radius: 999px;
+  border: 1px solid #00ffb0;
+  background: linear-gradient(90deg, #00ffb0, #00ffc3);
+  color: #021015;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(0, 255, 176, 0.8);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  white-space: nowrap;
+}
+
+.btn-discord:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+  box-shadow: 0 0 26px rgba(0, 255, 176, 1);
+}
+
+/* ============ TABS ============ */
+
+.profile-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 60px;
+  display: flex;
+  align-items: flex-end;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.9),
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.9)
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.profile-tabs .tab {
+  background: none;
+  border: none;
+  padding: 14px 28px;
+  margin-right: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #9cb2c4;
+  cursor: default;
+  border-bottom: 2px solid transparent;
+}
+
+.profile-tabs .tab.active {
+  color: #00ffb0;
+  border-bottom-color: #00ffb0;
+}
+
+/* ============ COMMON BOX STYLE ============ */
+
+.profile-box {
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  padding: 18px 28px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 176, 0.35);
+  background:
+    radial-gradient(circle at top left, rgba(0, 255, 176, 0.16), transparent 55%),
+    #02070c;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.9),
+    0 0 40px rgba(0, 0, 0, 0.9);
+}
+
+/* ============ DISCORD BOX ============ */
+
+.discord-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.discord-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.discord-title {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #e6f0ff;
+}
+
+.discord-sub {
+  font-size: 13px;
+  opacity: 0.75;
+}
+
+.discord-display-name {
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.55);
+  padding: 8px 18px;
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2px;
+}
+
+.discord-display-name .discord-display-sub {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+/* ============ HISTORY BOX ============ */
+
+.history-box {
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.history-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #00ffb0;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.history-view-all {
+  background: none;
+  border: none;
+  color: #c0d4e8;
+  font-size: 13px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.history-view-all::after {
+  content: "›";
+  font-size: 18px;
+  transform: translateY(-1px);
+}
+
+.history-list {
+  margin-top: 10px;
+}
+
+.history-empty {
+  font-size: 14px;
+  opacity: 0.7;
+  padding: 16px 0 10px;
+}
+
+/* từng dòng lịch sử */
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 14px;
+}
+
+.history-left {
+  max-width: 55%;
+}
+
+.history-date {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.history-location {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.history-middle {
+  width: 140px;
+  text-align: center;
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.history-right {
+  width: 120px;
+  text-align: right;
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  color: #00ffb0;
+}
+
+/* các dòng phía dưới mờ hơn giống mockup */
+.history-item:nth-child(n + 2) {
+  opacity: 0.55;
+}
+
+/* ============ PROFILE FOOTER (TRONG TRANG) ============ */
+
+.profile-footer {
+  max-width: 100%;
+  margin: 80px auto 0;
+  padding: 48px 24px 32px;
+  color: #fff;
+  text-align: left;
+  background:
+    linear-gradient(to top, rgba(0, 255, 176, 0.22), transparent 55%),
+    repeating-linear-gradient(
+      to right,
+      rgba(0, 255, 176, 0.0) 0,
+      rgba(0, 255, 176, 0.45) 1px,
+      rgba(0, 255, 176, 0.0) 5px
+    ),
+    #02070c;
+  border-top: 1px solid rgba(0, 255, 176, 0.4);
+}
+
+.profile-footer::before {
+  /* bóng tối phía trên khối gradient */
+  content: "";
+  display: block;
+  max-width: 1100px;
+  margin: 0 auto 24px;
+  border-radius: 18px;
+  height: 28px;
+  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.9), transparent 70%);
+}
+
+.profile-footer > * {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.footer-logo-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 999px;
+  background: radial-gradient(circle at top, #ff4dd8, #4e1fff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+}
+
+.footer-title {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.footer-desc {
+  max-width: 620px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.8;
+  margin-bottom: 26px;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 18px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* ============ RESPONSIVE ============ */
+
+@media (max-width: 992px) {
+  .profile-hero {
+    height: 260px;
+  }
+
+  .profile-hero-content {
+    padding: 32px 24px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+
+  .profile-tabs {
+    padding: 0 24px;
+  }
+
+  .profile-box {
+    margin-inline: 16px;
+  }
+
+  .profile-footer > * {
+    margin-inline: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+
+  .profile-name {
+    font-size: 20px;
+  }
+
+  .btn-discord {
+    padding-inline: 18px;
+    font-size: 12px;
+  }
+
+  .discord-box {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .history-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .history-middle,
+  .history-right {
+    width: auto;
+    text-align: left;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}

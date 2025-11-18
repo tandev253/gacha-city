@@ -1,124 +1,184 @@
-// src/api/custom-auth/controllers/custom-auth.ts
+// Strapi v5 - TypeScript ESM
 
-const otpStore = new Map<
-  string,
-  {
-    username: string;
-    password: string;
-    code: string;
-    expiresAt: number;
-  }
->();
+// Kiểu dữ liệu cho OTP lưu RAM
+interface OtpRecord {
+  username: string;
+  email: string;
+  password: string;
+  otp: string;
+  expiresAt: number;
+}
+
+// Lưu OTP tạm trong RAM
+const otpStore: Map<string, OtpRecord> =
+  new Map();
+
+function generateOtp(): string {
+  return Math.floor(
+    100000 + Math.random() * 900000,
+  ).toString();
+}
 
 export default {
-  async sendOtp(ctx) {
-    const { email, username, password } =
-      ctx.request.body || {};
+  /** ======= GỬI OTP ======= */
+  async sendOtp(ctx: any) {
+    try {
+      const { username, email, password } =
+        ctx.request.body ?? {};
 
-    if (!email || !username || !password) {
-      return ctx.badRequest(
-        "Thiếu email, username hoặc password.",
+      strapi.log.info(
+        ">>> sendOtp body:",
+        ctx.request.body,
       );
-    }
 
-    // check tồn tại
-    const existingUsers = await strapi
-      .plugin("users-permissions")
-      .service("user")
-      .fetchAll({
-        filters: {
-          $or: [{ email }, { username }],
+      if (!username || !email || !password) {
+        return ctx.badRequest({
+          error: {
+            message:
+              "Thiếu username, email hoặc password.",
+          },
+        });
+      }
+
+      const emailLower =
+        String(email).toLowerCase();
+
+      // Kiểm tra username/email tồn tại
+      const existedUsers =
+        await strapi.entityService.findMany(
+          "plugin::users-permissions.user",
+          {
+            filters: {
+              $or: [
+                { username },
+                { email: emailLower },
+              ],
+            },
+            limit: 1,
+          },
+        );
+
+      if (existedUsers?.length > 0) {
+        return ctx.badRequest({
+          error: {
+            message:
+              "Username hoặc Email đã tồn tại.",
+          },
+        });
+      }
+
+      // Tạo và lưu OTP
+      const otp = generateOtp();
+
+      otpStore.set(emailLower, {
+        username,
+        email: emailLower,
+        password,
+        otp,
+        expiresAt: Date.now() + 10 * 60 * 1000,
+      });
+
+      strapi.log.info(
+        `OTP đăng ký cho ${emailLower}: ${otp}`,
+      );
+
+      return ctx.send({
+        ok: true,
+        message:
+          "Đã tạo OTP (dev). Xem mã trong log server.",
+      });
+    } catch (err) {
+      strapi.log.error(
+        "custom-auth.sendOtp error:",
+        err,
+      );
+      return ctx.internalServerError({
+        error: {
+          message: "Lỗi server khi gửi OTP.",
         },
       });
-
-    if (
-      existingUsers &&
-      existingUsers.length > 0
-    ) {
-      return ctx.badRequest(
-        "Email hoặc username đã tồn tại.",
-      );
     }
-
-    // Tạo OTP
-    const code = String(
-      Math.floor(100000 + Math.random() * 900000),
-    );
-    const expiresAt = Date.now() + 10 * 60 * 1000; // 10 phút
-
-    otpStore.set(email, {
-      username,
-      password,
-      code,
-      expiresAt,
-    });
-
-    // Gửi email
-    try {
-      await strapi
-        .plugin("email")
-        .service("email")
-        .send({
-          to: email,
-          subject: "Mã OTP đăng ký Gacha City",
-          text: `Mã OTP của bạn là: ${code}. Mã có hiệu lực trong 10 phút.`,
-        });
-    } catch (err) {
-      strapi.log.error("Send OTP error", err);
-      return ctx.internalServerError(
-        "Không gửi được OTP.",
-      );
-    }
-
-    return ctx.send({
-      ok: true,
-      message: "OTP đã được gửi.",
-    });
   },
 
-  async registerWithOtp(ctx) {
-    const { email, otp } = ctx.request.body || {};
+  /** ======= XÁC NHẬN OTP & TẠO USER ======= */
+  async registerWithOtp(ctx: any) {
+    try {
+      const { email, otp } =
+        ctx.request.body ?? {};
 
-    if (!email || !otp) {
-      return ctx.badRequest(
-        "Thiếu email hoặc OTP.",
-      );
-    }
+      if (!email || !otp) {
+        return ctx.badRequest({
+          error: {
+            message: "Thiếu email hoặc otp.",
+          },
+        });
+      }
 
-    const entry = otpStore.get(email);
-    if (!entry) {
-      return ctx.badRequest(
-        "Không tìm thấy yêu cầu OTP cho email này.",
-      );
-    }
+      const emailLower =
+        String(email).toLowerCase();
+      const record = otpStore.get(emailLower);
 
-    if (Date.now() > entry.expiresAt) {
-      otpStore.delete(email);
-      return ctx.badRequest("OTP đã hết hạn.");
-    }
+      if (!record) {
+        return ctx.badRequest({
+          error: {
+            message:
+              "Không tìm thấy yêu cầu đăng ký với email này.",
+          },
+        });
+      }
 
-    if (entry.code !== otp) {
-      return ctx.badRequest("OTP không đúng.");
-    }
+      if (Date.now() > record.expiresAt) {
+        otpStore.delete(emailLower);
+        return ctx.badRequest({
+          error: {
+            message:
+              "OTP đã hết hạn. Vui lòng đăng ký lại.",
+          },
+        });
+      }
 
-    // Tạo user
-    const user = await strapi
-      .plugin("users-permissions")
-      .service("user")
-      .add({
-        username: entry.username,
-        email,
-        password: entry.password,
-        confirmed: true,
+      if (String(otp) !== record.otp) {
+        return ctx.badRequest({
+          error: {
+            message: "OTP không chính xác.",
+          },
+        });
+      }
+
+      // Tạo user trong Strapi
+      const user =
+        await strapi.entityService.create(
+          "plugin::users-permissions.user",
+          {
+            data: {
+              username: record.username,
+              email: record.email,
+              password: record.password,
+              confirmed: true,
+              blocked: false,
+            },
+          },
+        );
+
+      otpStore.delete(emailLower);
+
+      if (user?.password) delete user.password;
+
+      return ctx.send({
+        ok: true,
+        message: "Đăng ký thành công.",
+        user,
       });
-
-    const jwt = await strapi
-      .plugin("users-permissions")
-      .service("jwt")
-      .issue({ id: user.id });
-
-    otpStore.delete(email);
-
-    return ctx.send({ jwt, user });
+    } catch (err) {
+      strapi.log.error(
+        "custom-auth.registerWithOtp error:",
+        err,
+      );
+      return ctx.internalServerError({
+        error: {
+          message: "Lỗi server khi xác nhận OTP.",
+        },
+      });
+    }
   },
 };

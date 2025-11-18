@@ -1,3 +1,17 @@
+// Strapi v5 - TypeScript ESM
+
+// Tạo type đơn giản cho route (đủ dùng, không cần @strapi/types)
+type RouteConfig = {
+  method: string;
+  path: string;
+  handler: string;
+  config: {
+    auth: boolean;
+    policies: any[];
+    middlewares: any[];
+  };
+};
+
 export default {
   routes: [
     {
@@ -6,6 +20,8 @@ export default {
       handler: "custom-auth.sendOtp",
       config: {
         auth: false,
+        policies: [],
+        middlewares: [],
       },
     },
     {
@@ -14,7 +30,9 @@ export default {
       handler: "custom-auth.registerWithOtp",
       config: {
         auth: false,
+        policies: [],
+        middlewares: [],
       },
     },
-  ],
+  ] as RouteConfig[],
 };

@@ -109,3 +109,19 @@ export async function getDashboard() {
     };
   }
 }
+
+
+export default {
+  routes: [
+    {
+      method: "GET",
+      path: "/gc-profile/me",
+      handler: "gc-profile.me",
+      config: {
+        auth: true, // bắt buộc đã đăng nhập (Bearer JWT)
+        policies: [],
+        middlewares: [],
+      },
+    },
+  ],
+};

@@ -1,0 +1,39 @@
+{
+    "kind": "collectionType",
+    "collectionName": "login_histories",
+    "info": {
+        "singularName": "login-history",
+        "pluralName": "login-histories",
+        "displayName": "login-history"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "dateDisplay": {
+            "type": "string"
+        },
+        "timeDisplay": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "country": {
+            "type": "string"
+        },
+        "os": {
+            "type": "string"
+        },
+        "durationDisplay": {
+            "type": "string"
+        },
+        "user": {
+            "type": "relation",
+            "relation": "manyToOne",
+            "target": "plugin::users-permissions.user",
+            "inversedBy": "login_histories"
+        }
+    }
+}

@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Guide from "./pages/Guide";
 import News from "./pages/News.jsx";
-
+import Profile from "./pages/Profile.jsx";
 import { getNavbar } from "./api/strapi";
 export default function App() {
   return (
@@ -18,7 +18,12 @@ export default function App() {
           path='/tin-tuc'
           element={<News />}
         />
+        <Route
+          path='/profile'
+          element={<Profile />}
+        />
       </Routes>
+      
     </BrowserRouter>
   );
 }

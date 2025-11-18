@@ -480,7 +480,7 @@ export default function AuthModal({
                 : isLogin
                 ? "ĐĂNG NHẬP"
                 : step === "form"
-                ? "ĐĂNG KÝ"
+                ? "TIẾP TỤC"
                 : "XÁC NHẬN OTP"}
             </button>
 

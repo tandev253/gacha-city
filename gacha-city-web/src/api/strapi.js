@@ -332,7 +332,6 @@ async function parseJsonSafe(res) {
   }
 }
 // GỬI OTP ĐĂNG KÝ
-
 export async function sendRegisterOtp(
   username,
   email,
@@ -357,12 +356,15 @@ export async function sendRegisterOtp(
     const data = await parseJsonSafe(res);
 
     if (!res.ok) {
-      return {
-        ok: false,
-        error:
-          data?.error ||
-          "Gửi OTP thất bại (server trả về lỗi).",
-      };
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        (typeof data?.error === "string"
+          ? data.error
+          : "") ||
+        "Gửi OTP thất bại (server trả về lỗi).";
+
+      return { ok: false, error: msg };
     }
 
     return { ok: true, data };
@@ -374,6 +376,7 @@ export async function sendRegisterOtp(
     };
   }
 }
+
 
 export async function registerWithOtp(
   email,
@@ -394,11 +397,15 @@ export async function registerWithOtp(
     const data = await parseJsonSafe(res);
 
     if (!res.ok) {
-      return {
-        ok: false,
-        error:
-          data?.error || "Xác thực OTP thất bại.",
-      };
+      const msg =
+        data?.error?.message ||
+        data?.message ||
+        (typeof data?.error === "string"
+          ? data.error
+          : "") ||
+        "Xác thực OTP thất bại.";
+
+      return { ok: false, error: msg };
     }
 
     return { ok: true, data };
@@ -410,7 +417,6 @@ export async function registerWithOtp(
     };
   }
 }
-
 
 // LẤY USER HIỆN TẠI TỪ JWT (Strapi Users)
 export async function getCurrentUser() {
@@ -502,4 +508,171 @@ export async function getEvents() {
     console.error("getEvents error:", err);
     return [];
   }
+}
+
+
+/* ================= PROFILE ================= */
+
+function buildImageUrl(img) {
+  if (!img) return "/default-avatar.png";
+
+  // media: { url, ... }
+  if (img.url) {
+    const raw = img.url;
+    return raw.startsWith("http")
+      ? raw
+      : `${API_URL}${raw}`;
+  }
+
+  // REST populate: { data: { attributes: { url } } }
+  if (img.data?.attributes?.url) {
+    const raw = img.data.attributes.url;
+    return raw.startsWith("http")
+      ? raw
+      : `${API_URL}${raw}`;
+  }
+
+  if (typeof img === "string") {
+    return img.startsWith("http")
+      ? img
+      : `${API_URL}${img}`;
+  }
+
+  return "/default-avatar.png";
+}
+
+export async function getProfile() {
+  const token =
+    localStorage.getItem("gc_access_token") ||
+    localStorage.getItem("gc_jwt");
+
+  if (!token) throw new Error("NO_TOKEN");
+
+  // ===== 1. Lấy thông tin user =====
+  const userRes = await fetch(
+    `${API_URL}/api/users/me?populate=avatar`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    },
+  );
+
+  if (!userRes.ok) {
+    console.log(
+      "getProfile /users/me error:",
+      await userRes.text(),
+    );
+    throw new Error("PROFILE_FAILED");
+  }
+
+  const rawUser = await userRes.json();
+
+  const user = {
+    id: rawUser.id,
+    username: rawUser.username,
+    email: rawUser.email,
+
+    characterName: rawUser.characterName,
+    discordName: rawUser.discordName,
+    avatarUrl: rawUser.avatar
+      ? buildImageUrl(rawUser.avatar)
+      : "/default-avatar.png",
+  };
+
+  // ===== helper format ngày/giờ từ createdAt =====
+  function buildDateTimeDisplays(isoString) {
+    if (!isoString) {
+      return { dateDisplay: "", timeDisplay: "" };
+    }
+    const d = new Date(isoString);
+
+    // Ngày 15 - 11 - 2025
+    const date = d.toLocaleDateString("vi-VN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    }); // 15/11/2025
+    const dateDisplay =
+      "Ngày " + date.replace(/\//g, " - ");
+
+    // 17 : 27 : 10
+    const time = d.toLocaleTimeString("vi-VN", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    }); // 17:27:10
+    const timeDisplay = time.replace(/:/g, " : ");
+
+    return { dateDisplay, timeDisplay };
+  }
+
+  // ===== 2. Lấy lịch sử đăng nhập =====
+  let histories = [];
+
+  try {
+    const historyRes = await fetch(
+      `${API_URL}/api/login-histories?filters[user][id][$eq]=${user.id}` +
+        `&sort[0]=createdAt:desc&pagination[limit]=5`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (historyRes.ok) {
+      const historyJson = await historyRes.json();
+      console.log(
+        "login histories json:",
+        historyJson,
+      );
+
+      histories = (historyJson.data || []).map(
+        (item, index) => {
+          const attrs =
+            item.attributes || item || {};
+
+          // lấy createdAt từ cả item và attributes cho chắc
+          const createdAt =
+            attrs.createdAt ||
+            item.createdAt ||
+            null;
+
+          const {
+            dateDisplay: autoDate,
+            timeDisplay: autoTime,
+          } = buildDateTimeDisplays(createdAt);
+
+          return {
+            id: item.id ?? index,
+            // nếu bạn có nhập sẵn trong Strapi thì dùng, không thì lấy auto từ createdAt
+            dateDisplay:
+              attrs.dateDisplay || autoDate,
+            timeDisplay:
+              attrs.timeDisplay || autoTime,
+            city: attrs.city || "",
+            country: attrs.country || "",
+            os: attrs.os || "Windows", // fallback cho giống design
+            durationDisplay:
+              attrs.durationDisplay ||
+              "01 : 57 : 46", // tạm fallback giống mockup
+          };
+        },
+      );
+    } else {
+      console.warn(
+        "getProfile histories error:",
+        await historyRes.text(),
+      );
+    }
+  } catch (err) {
+    console.error(
+      "getProfile histories err:",
+      err,
+    );
+  }
+
+  return { user, histories };
 }
