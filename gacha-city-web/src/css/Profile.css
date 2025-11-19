@@ -3,7 +3,8 @@
 .profile-page {
   min-height: 100vh;
   padding-top: 80px; /* chừa chỗ cho navbar */
-  background: radial-gradient(circle at top, #04121a 0, #01040a 40%, #000 100%);
+  background: url("/banner-city.png") center top / cover no-repeat, 
+              radial-gradient(circle at top, #04121a 0, #01040a 40%, #000 100%);
   color: #fff;
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
@@ -26,22 +27,21 @@
 
 .profile-hero {
   position: relative;
-  max-width: 100%;
+  width: 100%;
   height: 280px;
-  margin: 0 auto 32px;
-  background: url("/banner-city.png") center center / cover no-repeat;
+  margin: 0 0 32px 0;
   overflow: hidden;
 }
 
 .profile-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
+  /* background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0.9),
     rgba(0, 0, 0, 0.45),
     rgba(0, 0, 0, 0.9)
-  );
+  ); */
 }
 
 .profile-hero-content {
@@ -52,6 +52,10 @@
   align-items: flex-end;
   justify-content: space-between;
   z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* ============ USER BLOCK ============ */
@@ -137,38 +141,43 @@
 /* ============ TABS ============ */
 
 .profile-tabs {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0 60px;
+  max-width: 1100px;
+  margin: 230px auto 24px;
+  padding: 0 24px;
   display: flex;
-  align-items: flex-end;
-  background: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.9),
-    rgba(0, 0, 0, 0.6),
-    rgba(0, 0, 0, 0.9)
-  );
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .profile-tabs .tab {
-  background: none;
-  border: none;
-  padding: 14px 28px;
+  background: transparent;
+  border: 2px solid #00ffb0;
+  border-radius: 8px;
+  padding: 12px 24px;
   margin-right: 8px;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #9cb2c4;
-  cursor: default;
-  border-bottom: 2px solid transparent;
+  color: #00ffb0;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
 }
 
 .profile-tabs .tab.active {
-  color: #00ffb0;
-  border-bottom-color: #00ffb0;
+  background: #00ffb0;
+  color: #021015;
+  box-shadow: 0 0 15px rgba(0, 255, 176, 0.6);
+}
+
+.profile-tabs .tab:hover {
+  background: rgba(0, 255, 176, 0.1);
+  box-shadow: 0 0 10px rgba(0, 255, 176, 0.4);
+}
+
+.profile-tabs .tab.active:hover {
+  background: #00ffb0;
+  box-shadow: 0 0 20px rgba(0, 255, 176, 0.8);
 }
 
 /* ============ COMMON BOX STYLE ============ */
