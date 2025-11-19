@@ -196,10 +196,10 @@ export default function Home() {
     <>
       <Navbar
         links={navLinks}
-        auth={auth} // 👈 truyền auth xuống
+        auth={auth} 
         onLoginClick={openLogin}
         onRegisterClick={openRegister}
-        onLogout={handleLogout} // 👈 truyền logout xuống
+        onLogout={handleLogout} 
       />
 
       <Hero
@@ -217,7 +217,7 @@ export default function Home() {
         mode={authMode}
         onClose={() => setAuthOpen(false)}
         onSwitchMode={setAuthMode}
-        onLoginSuccess={handleLoginSuccess} // 👈 callback
+        onLoginSuccess={handleLoginSuccess} 
       />
     </>
   );

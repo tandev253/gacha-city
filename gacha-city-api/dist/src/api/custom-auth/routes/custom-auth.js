@@ -1,5 +1,4 @@
 "use strict";
-// Strapi v5 - TypeScript ESM
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = {
     routes: [

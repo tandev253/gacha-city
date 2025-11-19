@@ -1,6 +1,4 @@
 // Strapi v5 - TypeScript ESM
-
-// Tạo type đơn giản cho route (đủ dùng, không cần @strapi/types)
 type RouteConfig = {
   method: string;
   path: string;

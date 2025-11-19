@@ -146,7 +146,7 @@ export default {
         });
       }
 
-      // DỮ LIỆU TẠO USER – ĐỂ service .add() tự xử lý hashing, role, provider...
+      // DỮ LIỆU TẠO USER – ĐỂ service .add() tự xử lý hashing, role, provider
       const userData = {
         username: record.username,
         email: record.email,

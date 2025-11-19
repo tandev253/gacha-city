@@ -7,7 +7,7 @@ export default ({ env }) => ({
     ),
   },
   auth: {
-    // 👇 SECRET cho JWT của admin
+    //  SECRET cho JWT của admin
     secret: env(
       "ADMIN_JWT_SECRET",
       "adminJwtSecretDev",

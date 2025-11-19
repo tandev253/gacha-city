@@ -6,7 +6,7 @@ exports.default = ({ env }) => ({
         salt: env("API_TOKEN_SALT", "apiTokenSaltDev"),
     },
     auth: {
-        // 👇 SECRET cho JWT của admin
+        //  SECRET cho JWT của admin
         secret: env("ADMIN_JWT_SECRET", "adminJwtSecretDev"),
     },
     transfer: {

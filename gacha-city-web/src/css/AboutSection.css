@@ -331,3 +331,14 @@
 .btn-outline:hover::after {
   border-color: #24D56D;
 }
+
+.about-footer {
+  position: absolute;
+  bottom: 15px;
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  color: #FFFFFF;
+  opacity: 0.6;
+  z-index: 2;
+}

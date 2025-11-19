@@ -76,6 +76,10 @@ export default function AboutSection({ data }) {
               "HƯỚNG DẪN CHI TIẾT"}
           </a>
         </div>
+        
+      </div>
+      <div className='about-footer'>
+       Copyright © 2025 GACHA CITY. All rights reserved.
       </div>
     </section>
   );

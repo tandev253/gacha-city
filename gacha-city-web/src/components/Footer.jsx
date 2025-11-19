@@ -44,7 +44,10 @@ export default function Footer() {
                 rel='noreferrer'
               >
                 <span className='footer-social-icon'>
-                  <img src='/icon-fb.png' alt='Facebook' />
+                  <img
+                    src='/icon-fb.png'
+                    alt='Facebook'
+                  />
                 </span>
                 <span className='footer-social-label'>
                   GACHA CITY
@@ -58,7 +61,10 @@ export default function Footer() {
                 rel='noreferrer'
               >
                 <span className='footer-social-icon'>
-                  <img src='/icon-discord.png' alt='Discord' />
+                  <img
+                    src='/icon-discord.png'
+                    alt='Discord'
+                  />
                 </span>
                 <span className='footer-social-label'>
                   GACHA CITY
@@ -67,6 +73,10 @@ export default function Footer() {
             </div>
           </div>
         </div>
+      </div>
+      <div className='about-footer'>
+        Copyright © 2025 GACHA CITY. All rights
+        reserved.
       </div>
     </footer>
   );

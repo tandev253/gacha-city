@@ -25,7 +25,7 @@ export async function getNavbar() {
     const flatItems = (json.data || []).map(
       (item) => ({
         id: item.id,
-        // ⚠️ Strapi của bạn dùng field "title" chứ không phải "name"
+    
         name:
           item.attributes.title ||
           item.attributes.name ||
