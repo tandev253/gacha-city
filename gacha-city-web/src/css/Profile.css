@@ -117,25 +117,85 @@
 }
 
 .btn-discord {
-  padding: 10px 24px;
-  border-radius: 999px;
-  border: 1px solid #00ffb0;
-  background: linear-gradient(90deg, #00ffb0, #00ffc3);
-  color: #021015;
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  position: relative;
+  padding: 16px 30px;
+  margin-left: 50px;
+  clip-path: polygon(
+    20% 0,
+    100% 0,
+    100% 50%,
+    80% 100%, 
+    0 100%,
+    0 50%
+  );
+  letter-spacing: 1px;
+  background: transparent;
+  box-shadow: 0 0 8px rgba(50, 240, 198, 0.4),
+    0 0 20px rgba(50, 240, 198, 0.3);
+  font-family: "Montserrat", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  text-align: center;
+  color: #FFFFFF;
   cursor: pointer;
-  box-shadow: 0 0 20px rgba(0, 255, 176, 0.8);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-  white-space: nowrap;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  text-transform: uppercase;
+}
+
+.btn-discord::before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  background: rgba(36, 213, 109, 0.7);
+  clip-path: polygon(
+    20% 0,
+    100% 0,
+    100% 50%,
+    80% 100%, 
+    0 100%,
+    0 50%
+  );
+  z-index: -1;
+}
+
+.btn-discord::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 2px solid #32f0c6;
+  clip-path: polygon(
+    20% 0,
+    100% 0,
+    100% 50%,
+    80% 100%, 
+    0 100%,
+    0 50%
+  );
+  z-index: -2;
 }
 
 .btn-discord:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.1);
-  box-shadow: 0 0 26px rgba(0, 255, 176, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(50, 240, 198, 0.6),
+    0 0 30px rgba(50, 240, 198, 0.4);
+}
+
+.btn-discord:hover::before {
+  background: rgba(50, 240, 198, 0.2);
+}
+
+.btn-discord:hover::after {
+  border-color: #24D56D;
 }
 
 /* ============ TABS ============ */
@@ -151,33 +211,32 @@
 
 .profile-tabs .tab {
   background: transparent;
-  border: 2px solid #00ffb0;
-  border-radius: 8px;
-  padding: 12px 24px;
-  margin-right: 8px;
+  border: none;
+  padding: 12px 0;
+  margin-right: 24px;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: #00ffb0;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: none;
 }
 
 .profile-tabs .tab.active {
-  background: #00ffb0;
-  color: #021015;
-  box-shadow: 0 0 15px rgba(0, 255, 176, 0.6);
+  background: transparent;
+  color: #00ffb0;
+  box-shadow: none;
 }
 
 .profile-tabs .tab:hover {
-  background: rgba(0, 255, 176, 0.1);
-  box-shadow: 0 0 10px rgba(0, 255, 176, 0.4);
+  background: transparent;
+  box-shadow: none;
 }
 
 .profile-tabs .tab.active:hover {
-  background: #00ffb0;
-  box-shadow: 0 0 20px rgba(0, 255, 176, 0.8);
+  background: transparent;
+  box-shadow: none;
 }
 
 /* ============ COMMON BOX STYLE ============ */
