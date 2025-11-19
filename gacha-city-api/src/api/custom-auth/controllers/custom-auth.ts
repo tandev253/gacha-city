@@ -101,6 +101,7 @@ export default {
   },
 
   /** ======= XÁC NHẬN OTP & TẠO USER ======= */
+
   async registerWithOtp(ctx: any) {
     try {
       const { email, otp } =
@@ -145,24 +146,26 @@ export default {
         });
       }
 
-      // Tạo user trong Strapi
-      const user =
-        await strapi.entityService.create(
-          "plugin::users-permissions.user",
-          {
-            data: {
-              username: record.username,
-              email: record.email,
-              password: record.password,
-              confirmed: true,
-              blocked: false,
-            },
-          },
-        );
+      // DỮ LIỆU TẠO USER – ĐỂ service .add() tự xử lý hashing, role, provider...
+      const userData = {
+        username: record.username,
+        email: record.email,
+        password: record.password,
+        confirmed: true,
+        provider: "local",
+        blocked: false,
+      };
+
+      // QUAN TRỌNG: dùng service users-permissions.user.add
+      const user = await strapi
+        .service("plugin::users-permissions.user")
+        .add(userData);
 
       otpStore.delete(emailLower);
 
-      if (user?.password) delete user.password;
+      if ((user as any)?.password) {
+        delete (user as any).password;
+      }
 
       return ctx.send({
         ok: true,

@@ -3,6 +3,70 @@
 const API_URL =
   import.meta.env.VITE_STRAPI_URL ||
   "http://localhost:1337";
+// ======== AUTH HELPERS (JWT) ========
+function extractJwt(payload) {
+  if (!payload) return null;
+
+  // Strapi v4/v5 thường trả { jwt, user }
+  if (typeof payload.jwt === "string")
+    return payload.jwt;
+
+  // Phòng trường hợp response có dạng { data: { jwt, user } }
+  if (
+    payload.data &&
+    typeof payload.data.jwt === "string"
+  ) {
+    return payload.data.jwt;
+  }
+
+  // Một số custom có thể dùng "token"
+  if (typeof payload.token === "string")
+    return payload.token;
+  if (
+    payload.data &&
+    typeof payload.data.token === "string"
+  )
+    return payload.data.token;
+
+  return null;
+}
+
+function extractUser(payload) {
+  if (!payload) return null;
+  if (payload.user) return payload.user;
+  if (payload.data && payload.data.user)
+    return payload.data.user;
+  return null;
+}
+
+function saveAuthToBrowser(payload) {
+  const jwt = extractJwt(payload);
+  const user = extractUser(payload);
+
+  if (!jwt) {
+    console.error(
+      "Không tìm thấy JWT trong response login:",
+      payload,
+    );
+    return;
+  }
+
+  // Lưu token để các API khác dùng
+  localStorage.setItem("gc_jwt", jwt);
+  localStorage.setItem("gc_access_token", jwt);
+
+  if (user) {
+    localStorage.setItem(
+      "gc_user",
+      JSON.stringify(user),
+    );
+  }
+
+  console.log(
+    "Đã lưu JWT vào localStorage:",
+    jwt.slice(0, 20) + "...",
+  );
+}
 
 // ================= NAVBAR =================
 export async function getNavbar() {
@@ -283,23 +347,29 @@ export async function getAboutSection() {
   }
 }
 
+
+
 /* ================= AUTH VỚI STRAPI ================= */
 
 // Đăng nhập chỉ cần username + password
 export async function authLogin(username, password) {
   try {
-    const res = await fetch(`${API_URL}/api/auth/local`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${API_URL}/api/auth/local`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          identifier: username, // dùng username hoặc email đều được
+          password,
+        }),
       },
-      body: JSON.stringify({
-        identifier: username, // dùng username để login
-        password,
-      }),
-    });
+    );
 
     const data = await parseJsonSafe(res);
+    console.log("authLogin response data:", data);
 
     if (!res.ok) {
       return {
@@ -310,6 +380,9 @@ export async function authLogin(username, password) {
       };
     }
 
+    // Lưu JWT + user vào localStorage
+    saveAuthToBrowser(data);
+
     return { ok: true, data };
   } catch (err) {
     console.error("authLogin error:", err);
@@ -319,7 +392,6 @@ export async function authLogin(username, password) {
     };
   }
 }
-
 // PARSE JSON AN TOÀN
 
 async function parseJsonSafe(res) {
@@ -421,7 +493,11 @@ export async function registerWithOtp(
 // LẤY USER HIỆN TẠI TỪ JWT (Strapi Users)
 export async function getCurrentUser() {
   const token = localStorage.getItem("gc_jwt");
-  if (!token) return null;
+  console.log("getCurrentUser token từ localStorage:", token);
+
+  if (!token || token === "undefined" || token === "null") {
+    return null;
+  }
 
   try {
     const res = await fetch(
@@ -433,15 +509,19 @@ export async function getCurrentUser() {
       },
     );
 
+    const text = await res.text();
+    console.log("/api/users/me status:", res.status, "body:", text);
+
     if (!res.ok) return null;
 
-    const data = await res.json();
+    const data = JSON.parse(text);
     return data;
   } catch (err) {
     console.error("getCurrentUser error:", err);
     return null;
   }
 }
+
 
 // ================= EVENTS (SỰ KIỆN) =================
 export async function getEvents() {
