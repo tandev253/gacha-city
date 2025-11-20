@@ -261,10 +261,17 @@
 
 /* ============ DISCORD BOX ============ */
 
-.discord-box {
+.profile-box.discord-box {
+  background: url("/profile-discord-box.png") no-repeat center center !important;
+  background-size: contain !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 50px 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 120px;
 }
 
 .discord-info {
@@ -274,10 +281,13 @@
 }
 
 .discord-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: #e6f0ff;
+  color: #FFFFFF;
+  text-shadow: 0 0 0 #83D3A4;
 }
 
 .discord-sub {
@@ -286,12 +296,15 @@
 }
 
 .discord-display-name {
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(0, 0, 0, 0.55);
-  padding: 8px 18px;
-  color: #fff;
-  font-size: 13px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  font-size: 24px;
+  color: #24D56D;
+  text-shadow: 0 0 0 #83D3A4;
   cursor: pointer;
   display: inline-flex;
   flex-direction: column;
@@ -301,8 +314,12 @@
 }
 
 .discord-display-name .discord-display-sub {
-  font-size: 11px;
-  opacity: 0.7;
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+  font-size: 16px;
+  color: #FFFFFF;
+  text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  opacity: 1;
 }
 
 /* ============ HISTORY BOX ============ */
