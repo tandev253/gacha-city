@@ -655,6 +655,7 @@ export async function getProfile() {
 
     characterName: rawUser.characterName,
     discordName: rawUser.discordName,
+    discordUser: rawUser.discordUser,
     avatarUrl: rawUser.avatar
       ? buildImageUrl(rawUser.avatar)
       : "/default-avatar.png",
@@ -667,22 +668,22 @@ export async function getProfile() {
     }
     const d = new Date(isoString);
 
-    // Ngày 15 - 11 - 2025
+  
     const date = d.toLocaleDateString("vi-VN", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    }); // 15/11/2025
+    }); 
     const dateDisplay =
       "Ngày " + date.replace(/\//g, " - ");
 
-    // 17 : 27 : 10
+    // 
     const time = d.toLocaleTimeString("vi-VN", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
       hour12: false,
-    }); // 17:27:10
+    }); 
     const timeDisplay = time.replace(/:/g, " : ");
 
     return { dateDisplay, timeDisplay };

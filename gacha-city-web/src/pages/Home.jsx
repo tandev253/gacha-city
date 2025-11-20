@@ -52,39 +52,6 @@ export default function Home() {
     setAuthOpen(true);
   };
 
-  // ========= FALLBACK NAVBAR =========
-  const fallbackNavbar = [
-    {
-      id: 0,
-      name: "Trang chủ",
-      url: "/",
-      children: [],
-    },
-    {
-      id: 1,
-      name: "Hướng dẫn",
-      url: "/huong-dan",
-      children: [],
-    },
-    {
-      id: 2,
-      name: "Tin tức",
-      url: "/tin-tuc",
-      children: [],
-    },
-    {
-      id: 3,
-      name: "Donate",
-      url: "/donate",
-      children: [],
-    },
-    {
-      id: 4,
-      name: "Tài khoản",
-      url: "/tai-khoan",
-      children: [],
-    },
-  ];
 
   // ====== LOAD DATA STRAPI (navbar, dashboard, ...) ======
   useEffect(() => {

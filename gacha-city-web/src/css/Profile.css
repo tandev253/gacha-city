@@ -543,6 +543,13 @@
     padding-inline: 18px;
     font-size: 12px;
   }
+  .btn-discord-linked {
+  opacity: 0.8;
+  cursor: default;
+}
+.btn-discord-linked:hover {
+  opacity: 0.8;
+}
 
   .discord-box {
     flex-direction: column;

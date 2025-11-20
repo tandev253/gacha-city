@@ -1,6 +1,9 @@
 {
   "name": "gacha-city-api",
   "version": "0.1.0",
+  "engines": {
+    "node": "20.x"
+  },
   "private": true,
   "description": "A Strapi application",
   "scripts": {

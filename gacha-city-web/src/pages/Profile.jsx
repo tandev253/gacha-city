@@ -36,39 +36,8 @@ export default function ProfilePage() {
 
   const navigate = useNavigate();
 
-  // ========= FALLBACK NAVBAR =========
-  const fallbackNavbar = [
-    {
-      id: 0,
-      name: "Trang chủ",
-      url: "/",
-      children: [],
-    },
-    {
-      id: 1,
-      name: "Hướng dẫn",
-      url: "/huong-dan",
-      children: [],
-    },
-    {
-      id: 2,
-      name: "Tin tức",
-      url: "/tin-tuc",
-      children: [],
-    },
-    {
-      id: 3,
-      name: "Donate",
-      url: "/donate",
-      children: [],
-    },
-    {
-      id: 4,
-      name: "Tài khoản",
-      url: "/tai-khoan",
-      children: [],
-    },
-  ];
+
+  
 
   // ====== LOAD NAVBAR TỪ STRAPI ======
   useEffect(() => {
@@ -205,6 +174,10 @@ export default function ProfilePage() {
 
   const user = profile?.user;
   const histories = profile?.histories || [];
+    const hasDiscordLinked = !!(
+      user?.discordUser || user?.discordName
+    );
+
 
   return (
     <>
@@ -258,9 +231,29 @@ export default function ProfilePage() {
                 </div>
 
                 <div className='profile-actions'>
-                  <button className='btn-discord'>
-                    Liên kết Discord
-                  </button>
+                  {hasDiscordLinked ? (
+                    // ĐÃ LIÊN KẾT DISCORD
+                    <button
+                      className='btn-discord btn-discord-linked'
+                      type='button'
+                      disabled
+                    >
+                      Đã liên kết Discord
+                    </button>
+                  ) : (
+                    // CHƯA LIÊN KẾT
+                    <button
+                      className='btn-discord'
+                      type='button'
+                      onClick={() =>
+                        navigate(
+                          "/lien-ket-discord",
+                        )
+                      }
+                    >
+                      Liên kết Discord
+                    </button>
+                  )}
                 </div>
               </div>
 
@@ -275,19 +268,23 @@ export default function ProfilePage() {
             <section className='profile-box discord-box'>
               <div className='discord-info'>
                 <div className='discord-title'>
-                  Tài khoản Discord đang liên kết
+                  {hasDiscordLinked
+                    ? "Tài khoản Discord đang liên kết"
+                    : "Chưa liên kết Discord"}
                 </div>
                 <div className='discord-sub'>
-                  {user.discordName
-                    ? user.discordName
-                    : "Chưa liên kết Discord"}
+                  {hasDiscordLinked
+                    ? user.discordUser
+                    : "Nhấn vào nút Liên kết Discord để kết nối tài khoản của bạn."}
                 </div>
               </div>
               <button className='discord-display-name'>
-                Tên hiển thị
-                <span className='discord-display-sub'>
-                  Tên đăng nhập
-                </span>
+                {hasDiscordLinked
+                  ? ` ${
+                      user.discordName ||
+                      "Không có tên hiển thị"
+                    }`
+                  : " Chưa có tên hiển thị"}
               </button>
             </section>
 
@@ -336,8 +333,6 @@ export default function ProfilePage() {
                 ))}
               </div>
             </section>
-
-           
           </>
         )}
       </main>

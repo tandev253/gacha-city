@@ -66,6 +66,9 @@
             "relation": "oneToMany",
             "target": "api::login-history.login-history",
             "mappedBy": "user"
+        },
+        "discordUser": {
+            "type": "string"
         }
     }
 }
